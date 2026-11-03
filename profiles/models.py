@@ -27,6 +27,11 @@ class StudentProfile(models.Model):
         blank=True,
         null=True,
     )
+    cv = models.FileField(
+        upload_to="student_cvs/",
+        blank=True,
+        null=True
+    )
 
     #Personal Details
     Gender_Choice = [
