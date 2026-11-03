@@ -22,8 +22,8 @@ class StudentProfile(models.Model):
     education = models.TextField(max_length = 100, blank=True)
     skills = models.TextField(blank=True)
 
-    Certification = models.ImageField(
-        upload_to="Certificatin",
+    certification = models.ImageField(
+        upload_to="certification",
         blank=True,
         null=True,
     )
