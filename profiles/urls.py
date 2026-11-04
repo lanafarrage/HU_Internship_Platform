@@ -10,4 +10,5 @@ urlpatterns = [
     path("profile/me/", ProfileMeView.as_view(), name="profile-me"),
     path("skills/", SkillListView.as_view(), name="skill-list"),
     path("", include(router.urls)),
+    path("api/", include("documents.urls")),
 ]

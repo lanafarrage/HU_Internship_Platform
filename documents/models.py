@@ -23,21 +23,21 @@ class Document(models.Model):
     DOCUMENT_TYPES = [
         ("offer_letter", "Offer letter"),
         ("agreement", "Internship Agreement"),
-        ("progress report","Progress Report"),
+        ("progress_report","Progress Report"),
         ("final_report","Final Report"),
         ("other","Other"),
     ]
 
-    placment = models.ForeignKey(
+    placement = models.ForeignKey(
         Placement,
         on_delete=models.CASCADE,
         related_name="documents",
     )
 
-    upload_by = models.ForeignKey(
+    uploaded_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete = models.CASCADE,
-        related_name="aploaded_documents",
+        on_delete=models.CASCADE,
+        related_name="uploaded_documents",
     )
 
     document_type = models.CharField(max_length=30 , choices=DOCUMENT_TYPES )
