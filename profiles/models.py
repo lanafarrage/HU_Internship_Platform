@@ -19,8 +19,8 @@ class StudentProfile(models.Model):
     full_name = models.CharField(max_length = 100)
     about_me = models.TextField(blank=True)
     experience = models.TextField(blank=True)
-    education = models.TextField(max_length = 100, blank=True)
-    skills = models.TextField(blank=True)
+    education = models.TextField(blank=True)
+    #skills = models.TextField(blank=True)
 
     certification = models.ImageField(
         upload_to="certification",
@@ -77,3 +77,24 @@ class StudentProfile(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class Skill(models.Model):
+    name = models.CharField(max_length=80, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class StudentSkill(models.Model):
+    profile = models.ForeignKey(
+        StudentProfile, on_delete=models.CASCADE, related_name="student_skills"
+    )
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    level = models.CharField(max_length=20, blank=True)  # beginner / intermediate / advanced
+
+    class Meta:
+        unique_together = ("profile", "skill")
+
+    def __str__(self):
+        return f"{self.profile.full_name} - {self.skill.name}"
