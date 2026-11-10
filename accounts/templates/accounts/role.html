@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Join our internship platform - Role Selection</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/role.css' %}">
+</head>
+
+<body>
+
+    <!-- Decorative Background Waves -->
+    <div class="decorative-background" aria-hidden="true">
+        <svg
+            class="background-svg"
+            fill="none"
+            preserveAspectRatio="none"
+            viewBox="0 0 780 540"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <!-- Outer Soft Cyan Wave -->
+            <path
+                d="M-60 520 C 140 430, 260 480, 420 370 C 580 260, 680 180, 840 220"
+                fill="none"
+                opacity="0.8"
+                stroke="#2DD4BF"
+                stroke-linecap="round"
+                stroke-width="1.75"
+            ></path>
+
+            <!-- Vivid Pink Curve -->
+            <path
+                d="M 60 540 C 220 380, 310 490, 470 380 C 620 270, 710 130, 790 330"
+                fill="none"
+                opacity="0.85"
+                stroke="#F472B6"
+                stroke-linecap="round"
+                stroke-width="1.6"
+            ></path>
+
+            <!-- Deep Blue-Violet Wave -->
+            <path
+                d="M 120 540 C 280 430, 420 440, 560 310 C 690 190, 730 40, 810 150"
+                fill="none"
+                opacity="0.7"
+                stroke="#4F46E5"
+                stroke-linecap="round"
+                stroke-width="1.8"
+            ></path>
+        </svg>
+    </div>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+
+        <a
+            aria-label="Go back to previous page"
+            class="back-link"
+            href="javascript:history.back()"
+        >
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                ></path>
+            </svg>
+
+            <span>Back</span>
+        </a>
+
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Title and Description -->
+        <div class="section-heading">
+            <h1>Join our internship platform</h1>
+
+            <p>Choose how you want to use the platform.</p>
+        </div>
+
+        <!-- Role Selection Cards -->
+        <section class="role-cards" aria-label="Role choices">
+
+            <!-- Student Card -->
+            <a
+                class="role-card student-card"
+                href="#"
+                role="button"
+            >
+                <!-- Graduation Cap Icon -->
+                <div class="card-icon">
+                    <svg
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        viewBox="0 0 24 24"
+                    >
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"></path>
+                    </svg>
+                </div>
+
+                <!-- Student Details -->
+                <div class="card-details">
+                    <h2>I'm a Student</h2>
+
+                    <p>Discover and apply for internships.</p>
+                </div>
+            </a>
+
+            <!-- Organization Card -->
+            <a
+                class="role-card organization-card"
+                href="#"
+                role="button"
+            >
+                <!-- Organization Building Icon -->
+                <div class="card-icon">
+                    <svg
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        viewBox="0 0 24 24"
+                    >
+                        <rect height="20" rx="1.5" width="16" x="4" y="2"></rect>
+
+                        <path
+                            d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"
+                            stroke-width="2.6"
+                        ></path>
+
+                        <path d="M10 22v-4h4v4"></path>
+                    </svg>
+                </div>
+
+                <!-- Organization Details -->
+                <div class="card-details">
+                    <h2>I'm an Organization</h2>
+
+                    <p>Publish internships and recruit students.</p>
+                </div>
+            </a>
+
+        </section>
+
+        <!-- Login Footer -->
+        <div class="login-footer">
+            <p>
+                Already have an account?
+
+                <a href="#login">Login!</a>
+            </p>
+        </div>
+
+    </main>
+
+</body>
+</html>

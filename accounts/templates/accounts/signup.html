@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - For Your Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'accounts/css/signup.css' %}">
+</head>
+
+<body>
+
+    <!-- Back Navigation -->
+    <header class="back-navigation">
+        <a href="#" class="back-link">
+            <svg
+                aria-hidden="true"
+                class="back-icon"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                ></path>
+            </svg>
+
+            <span>Back</span>
+        </a>
+    </header>
+
+    <!-- Sign Up Main Section -->
+    <main class="signup-main">
+        <div class="signup-container">
+
+            <!-- Header -->
+            <div class="signup-header">
+                <h1>SIGN UP</h1>
+                <p>For Your Account</p>
+            </div>
+
+            <!-- Sign Up Form -->
+            <form action="#" method="POST" class="signup-form">
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Enter your email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="example@gmail.com"
+                        class="form-input-custom"
+                    >
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Username"
+                        class="form-input-custom"
+                    >
+                </div>
+
+                <!-- First Name and Last Name -->
+                <div class="name-fields">
+
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            placeholder="e.g. Lana"
+                            class="form-input-custom"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            placeholder="e.g. Bou Farrage"
+                            class="form-input-custom"
+                        >
+                    </div>
+
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="************"
+                        class="form-input-custom"
+                    >
+                </div>
+
+                <!-- Login Redirect -->
+                <div class="login-redirect">
+                    <p>
+                        Already have an account?
+                        <a href="#">Login</a>
+                    </p>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="submit-container">
+                    <button type="submit" class="signup-button">
+                        SIGN UP
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- Decorative Curves -->
+    <div class="decorative-curves" aria-hidden="true">
+        <svg
+            class="curves-svg"
+            fill="none"
+            viewBox="0 0 750 480"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <!-- Pink Line -->
+            <path
+                d="M 640 480 C 650 360 700 240 760 160 C 680 180 640 260 620 380 C 600 460 520 480 480 480"
+                fill="none"
+                opacity="0.9"
+                stroke="#ea829e"
+                stroke-width="1.25"
+            ></path>
+
+            <!-- Mint / Cyan Line -->
+            <path
+                d="M 400 480 C 460 440 560 410 650 420 C 740 430 760 250 670 200 C 620 170 560 360 440 460"
+                fill="none"
+                opacity="0.95"
+                stroke="#1cd4b8"
+                stroke-width="1.25"
+            ></path>
+
+            <!-- Deep Slate / Indigo Line -->
+            <path
+                d="M 500 480 C 560 420 620 460 700 370 C 760 290 700 180 770 140"
+                fill="none"
+                opacity="0.85"
+                stroke="#475b94"
+                stroke-width="1.25"
+            ></path>
+        </svg>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - To Continue</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+     <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+</head>
+
+<body>
+
+    <!-- BEGIN: TopBar -->
+    <header class="top-bar">
+
+        <!-- Back Navigation Link -->
+        <a class="back-navigation" data-purpose="back-navigation" href="#back">
+
+            <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                </path>
+            </svg>
+
+            <span>Back</span>
+
+        </a>
+
+    </header>
+    <!-- END: TopBar -->
+
+
+    <!-- BEGIN: MainContent -->
+    <main class="main-content">
+
+        <div class="login-container">
+
+            <!-- Header Section -->
+            <section class="heading-section" data-purpose="heading-section">
+
+                <h1>LOGIN</h1>
+
+                <p>To Continue</p>
+
+            </section>
+
+
+            <!-- Login Form -->
+            <form action="#" class="login-form" data-purpose="login-form" method="POST" onsubmit="event.preventDefault();">
+
+                <!-- Email Input Field -->
+                <div class="form-group email-group">
+
+                    <label for="email">
+                        Enter your email:
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="example@gmail.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Password Input Field -->
+                <div class="form-group password-group">
+
+                    <label for="password">
+                        Enter your password:
+                    </label>
+
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="**********"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Sign Up Hint -->
+                <div class="signup-hint">
+
+                    <span>
+                        Not a member yet?
+
+                        <a href="#signup">Sign up</a>
+                    </span>
+
+                </div>
+
+
+                <!-- Next Button -->
+                <div class="button-container">
+
+                    <button
+                        class="submit-button"
+                        data-purpose="submit-button"
+                        type="submit"
+                    >
+                        Next
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+    <!-- END: MainContent -->
+
+
+    <!-- BEGIN: DecorativeBackgroundWaves -->
+    <aside class="curved-waves" aria-hidden="true">
+
+        <svg
+            class="waves-svg"
+            fill="none"
+            viewBox="0 0 550 420"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+
+            <!-- Dark Blue Wave -->
+            <path
+                d="M 0 420 C 180 405, 300 420, 390 380 C 470 345, 510 240, 550 200"
+                fill="none"
+                stroke="#3d5da5"
+                stroke-opacity="0.85"
+                stroke-width="1.6"
+            ></path>
+
+            <!-- Cyan / Teal Wave -->
+            <path
+                d="M 120 420 C 260 415, 380 370, 430 330 C 500 270, 480 180, 550 160"
+                fill="none"
+                stroke="#00d5b6"
+                stroke-opacity="0.9"
+                stroke-width="1.6"
+            ></path>
+
+            <!-- Pink / Magenta Wave -->
+            <path
+                d="M 50 420 C 120 380, 260 380, 370 370 C 490 360, 480 230, 550 135"
+                fill="none"
+                stroke="#e96996"
+                stroke-opacity="0.85"
+                stroke-width="1.4"
+            ></path>
+
+        </svg>
+
+    </aside>
+    <!-- END: DecorativeBackgroundWaves -->
+
+</body>
+</html>
