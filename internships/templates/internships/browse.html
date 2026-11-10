@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Internships</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; }
+
+        /* Header styling with space to breathe */
+        .header { background: #e0f2fe; padding: 45px 40px 60px 40px; display: flex; align-items: center; position: relative; }
+        .back-btn { text-decoration: none; color: #0284c7; font-size: 16px; font-weight: 600; padding: 8px 16px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .header h1 { flex-grow: 1; text-align: center; color: #0f172a; margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.4; }
+
+        /* Filter Container styling */
+        .filter-container { max-width: 1000px; margin: -35px auto 40px auto; background: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08); display: flex; gap: 14px; position: relative; z-index: 10; flex-wrap: wrap; }
+        .filter-container input, .filter-container select, .filter-container button { padding: 14px 18px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; background: white; }
+        .filter-container input:focus, .filter-container select:focus { border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15); }
+
+        /* Prominent Search Bar */
+        .search-box { flex: 2; min-width: 100px; font-size: 15px; }
+        .btn-search { background: #0284c7; color: white; border: none; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .btn-search:hover { background: #0369a1; }
+
+        /* Card Content & Colored Badges */
+        .content { max-width: 1000px; margin: 0 auto; padding: 0 20px 60px 20px; }
+        .card { background: white; padding: 24px; margin-bottom: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .card h3 { margin: 0 0 12px 0; color: #0f172a; font-size: 20px; }
+
+        /* Category Color Badges */
+        .badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-right: 8px; }
+        .badge-software { background-color: #dbeafe; color: #1e40af; }
+        .badge-data { background-color: #f3e8ff; color: #6b21a8; }
+        .badge-cyber { background-color: #fee2e2; color: #991b1b; }
+        .badge-it { background-color: #feefc3; color: #854d0e; }
+        .badge-location { background-color: #e2e8f0; color: #334155; }
+
+        .meta-info { margin-top: 12px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .description { line-height: 1.6; color: #475569; }
+        .requirements { background: #f8fafc; padding: 10px 14px; border-radius: 8px; font-size: 14px; color: #334155; border-left: 3px solid #0284c7; margin-top: 12px; }
+
+        /* Apply button */
+        .apply-wrap { margin-top: 15px; }
+        .btn-apply { background: #10b981; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; }
+        .btn-apply:hover { background: #059669; }
+        .rec-btn { text-decoration: none; color: white; background: #7c3aed; font-weight: 600; padding: 8px 16px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="#" class="back-btn">&larr; Back</a>
+        <h1>Find the right internship for you!</h1>
+        <a href="{% url 'recommended_internships' %}" class="rec-btn">✨ Recommended for you</a>
+    </div>
+
+    <form method="get" class="filter-container">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search internships, title, or skills..." class="search-box">
+
+        <select name="category" onchange="this.form.submit()">
+            <option value="All" {% if selected_category == 'All' or not selected_category %}selected{% endif %}>Category: All</option>
+            <option value="Software Engineering" {% if selected_category == 'Software Engineering' %}selected{% endif %}>Software Engineering</option>
+            <option value="Data Science" {% if selected_category == 'Data Science' %}selected{% endif %}>Data Science</option>
+            <option value="Cybersecurity" {% if selected_category == 'Cybersecurity' %}selected{% endif %}>Cybersecurity</option>
+            <option value="IT & Support" {% if selected_category == 'IT & Support' %}selected{% endif %}>IT & Support</option>
+        </select>
+
+        <select name="location" onchange="this.form.submit()">
+            <option value="All" {% if selected_location == 'All' or not selected_location %}selected{% endif %}>Location: All</option>
+            <option value="Beirut" {% if selected_location == 'Beirut' %}selected{% endif %}>Beirut</option>
+            <option value="Tripoli" {% if selected_location == 'Tripoli' %}selected{% endif %}>Tripoli</option>
+            <option value="Byblos" {% if selected_location == 'Byblos' %}selected{% endif %}>Byblos</option>
+            <option value="Sidon" {% if selected_location == 'Sidon' %}selected{% endif %}>Sidon</option>
+            <option value="Remote" {% if selected_location == 'Remote' %}selected{% endif %}>Remote</option>
+        </select>
+
+        <select name="sort" onchange="this.form.submit()">
+            <option value="date" {% if sort_by == 'date' %}selected{% endif %}>Sort By: Date</option>
+            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Sort By: Name</option>
+        </select>
+
+        <button type="submit" class="btn-search">Search</button>
+    </form>
+
+    <div class="content">
+        {% for listing in listings %}
+            <div class="card">
+                <h3>{{ listing.title }}</h3>
+                <div class="meta-info">
+                    {% if listing.category == 'Software Engineering' %}
+                        <span class="badge badge-software">Software Engineering</span>
+                    {% elif listing.category == 'Data Science' %}
+                        <span class="badge badge-data">Data Science</span>
+                    {% elif listing.category == 'Cybersecurity' %}
+                        <span class="badge badge-cyber">Cybersecurity</span>
+                    {% else %}
+                        <span class="badge badge-it">{{ listing.category }}</span>
+                    {% endif %}
+
+                    <span class="badge badge-location">📍 {{ listing.location }}</span>
+                    <span style="font-size: 14px; color: #64748b;">Deadline: {{ listing.deadline }}</span>
+                </div>
+                <p class="description">{{ listing.description }}</p>
+                <div class="requirements">
+                    <strong>Requirements:</strong> {{ listing.requirements }}
+                </div>
+
+                <div class="apply-wrap">
+                    <a href="{% url 'apply_internship' listing.pk %}" class="btn-apply">Apply Now</a>
+                </div>
+            </div>
+        {% empty %}
+            <p style="text-align: center; color: #64748b; font-size: 16px; padding: 40px 0;">No internships found matching your criteria.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

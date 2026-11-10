@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommended Internships</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; }
+        .header { background: #e0f2fe; padding: 45px 40px; display: flex; align-items: center; }
+        .back-btn { text-decoration: none; color: #0284c7; font-weight: 600; padding: 8px 16px; background: white; border-radius: 8px; }
+        .header h1 { flex-grow: 1; text-align: center; margin: 0; font-size: 30px; color: #0f172a; }
+        .content { max-width: 1000px; margin: 30px auto; padding: 0 20px 60px; }
+        .card { background: white; padding: 24px; margin-bottom: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .card-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .card h3 { margin: 0; font-size: 20px; }
+        .score { background: #dcfce7; color: #166534; font-weight: 700; padding: 6px 14px; border-radius: 20px; white-space: nowrap; }
+        .meta { margin: 12px 0; color: #64748b; font-size: 14px; }
+        .chip { display: inline-block; background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 16px; font-size: 13px; font-weight: 600; margin: 4px 6px 0 0; }
+        .why { font-size: 14px; color: #334155; margin-top: 10px; }
+        .btn-apply { background: #10b981; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 15px; }
+        .empty { text-align: center; color: #64748b; padding: 40px 0; }
+        .msg { padding: 14px 18px; border-radius: 10px; font-weight: 600; margin-bottom: 20px; }
+        .msg-error { background: #fee2e2; color: #991b1b; }
+        .msg-success { background: #dcfce7; color: #166534; }
+        .msg-warning { background: #fef9c3; color: #854d0e; }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="{% url 'browse_internships' %}" class="back-btn">&larr; Browse</a>
+        <h1>Recommended for you</h1>
+    </div>
+
+    <div class="content">
+        {% for message in messages %}
+            <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+
+        {% for r in results %}
+            <div class="card">
+                <div class="card-top">
+                    <h3>{{ r.listing.title }}</h3>
+                    <span class="score">{{ r.score }}% match</span>
+                </div>
+                <div class="meta">📍 {{ r.listing.location }} · {{ r.listing.category }} · Deadline: {{ r.listing.deadline }}</div>
+                {% if r.matched %}
+                    <div class="why">Why it fits you:</div>
+                    {% for word in r.matched %}<span class="chip">{{ word }}</span>{% endfor %}
+                {% endif %}
+                <a href="{% url 'apply_internship' r.listing.pk %}" class="btn-apply">Apply Now</a>
+            </div>
+        {% empty %}
+            <p class="empty">
+                {% if has_profile_text %}
+                    No strong matches right now. Check back when new internships are posted.
+                {% else %}
+                    Add your skills and major to your profile to get recommendations.
+                {% endif %}
+            </p>
+        {% endfor %}
+    </div>
+</body>
+</html>
