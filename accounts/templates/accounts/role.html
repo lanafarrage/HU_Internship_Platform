@@ -96,7 +96,7 @@
             <!-- Student Card -->
             <a
                 class="role-card student-card"
-                href="#"
+                href="{% url 'accounts:register_student' %}"
                 role="button"
             >
                 <!-- Graduation Cap Icon -->
@@ -124,7 +124,7 @@
             <!-- Organization Card -->
             <a
                 class="role-card organization-card"
-                href="#"
+                href="{% url 'accounts:register_company' %}"
                 role="button"
             >
                 <!-- Organization Building Icon -->
@@ -162,7 +162,7 @@
             <p>
                 Already have an account?
 
-                <a href="#login">Login!</a>
+                <a href="{% url 'accounts:login' %}">Login!</a>
             </p>
         </div>
 

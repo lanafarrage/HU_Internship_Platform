@@ -17,7 +17,7 @@
 
     <!-- Back Navigation -->
     <header class="back-navigation">
-        <a href="#" class="back-link">
+        <a href="{% url 'accounts:register' %}" class="back-link">
             <svg
                 aria-hidden="true"
                 class="back-icon"
@@ -44,36 +44,60 @@
             <!-- Header -->
             <div class="signup-header">
                 <h1>SIGN UP</h1>
-                <p>For Your Account</p>
+                <p>{% if is_company %} For Your Company Account{% else %} For Your Account{% endif %}</p>
             </div>
 
             <!-- Sign Up Form -->
-            <form action="#" method="POST" class="signup-form">
+            <form action="" method="POST" class="signup-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }} 
 
                 <!-- Email -->
                 <div class="form-group">
-                    <label for="email">Enter your email:</label>
+                    <label for="email">
+                        {% if is_company %}Enter your work email:{% else %}Enter your university email:{% endif %}
+                    </label>
                     <input
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="example@gmail.com"
+                        placeholder="{% if is_company %}name@company.com{% else %}example@haigazian.edu.lb{% endif %}
+                        value="{{ form.email.value|default:''}}"
                         class="form-input-custom"
+                        required
                     >
+                    {{ form.email.errors }}
                 </div>
 
                 <!-- Username -->
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">{% if is_company %}Username{% else %}University ID{% endif %}</label>
                     <input
                         type="text"
                         id="username"
                         name="username"
-                        placeholder="Username"
+                        placeholder="{% if is_company %}Username{% else %}e.g. 2310052{% endif %}"
+                        value="{{ form.username.value|default:'' }}"
                         class="form-input-custom"
+                        required
                     >
+                    {{ form.username.errors }}
                 </div>
-
+                {% if is_company %}
+                <div class="form-group">
+                    <label for="company_name">Company name:</label>
+                    <input
+                        type="text"
+                        id="company_name"
+                        name="company_name"
+                        placeholder="e.g. Inmind.ai"
+                        value="{{ form.company_name.value|default:'' }}"
+                        class="form-input-custom"
+                        required
+                    >
+                    {{ form.company_name.errors }}
+                </div>
+                {% endif %}
                 <!-- First Name and Last Name -->
                 <div class="name-fields">
 
@@ -84,8 +108,10 @@
                             id="firstName"
                             name="firstName"
                             placeholder="e.g. Lana"
+                            value="{{ form.first_name.value|default:'' }}"
                             class="form-input-custom"
                         >
+                        {{ form.first_name.errors }}
                     </div>
 
                     <div class="form-group">
@@ -95,29 +121,45 @@
                             id="lastName"
                             name="lastName"
                             placeholder="e.g. Bou Farrage"
+                            value="{{ form.last_name.value|default:'' }}"
                             class="form-input-custom"
                         >
+                        {{ form.last_name.errors }}
                     </div>
 
                 </div>
 
                 <!-- Password -->
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label for="password1">Password:</label>
                     <input
                         type="password"
-                        id="password"
-                        name="password"
+                        id="password1"
+                        name="password1"
                         placeholder="************"
                         class="form-input-custom"
                     >
+                    {{ form.password1.errors }}
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="password2">Confirm Password:</label>
+                    <input
+                        type="password"
+                        id="password2"
+                        name="password2"
+                        placeholder="************"
+                        class="form-input-custom"
+                    >
+                    {{ form.password2.errors }}
                 </div>
 
                 <!-- Login Redirect -->
                 <div class="login-redirect">
                     <p>
                         Already have an account?
-                        <a href="#">Login</a>
+                        <a href="{% url 'accounts:login' %}">Login</a>
                     </p>
                 </div>
 

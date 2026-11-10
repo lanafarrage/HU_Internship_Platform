@@ -23,7 +23,7 @@
     <header class="top-bar">
 
         <!-- Back Navigation Link -->
-        <a class="back-navigation" data-purpose="back-navigation" href="#back">
+        <a class="back-navigation" data-purpose="back-navigation" href="javascript:history.back()">
 
             <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
@@ -53,23 +53,41 @@
                 <p>To Continue</p>
 
             </section>
-
-
+            
+            <!-- Success message -->
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <ul class="messages">
+                <li class="success">Successfully logged in!</li>
+            </ul>
+            {% endif %}
+            
             <!-- Login Form -->
-            <form action="#" class="login-form" data-purpose="login-form" method="POST" onsubmit="event.preventDefault();">
+            <form action="{% url 'accounts:login' %}" class="login-form" data-purpose="login-form" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
 
-                <!-- Email Input Field -->
+                <!-- Wrong ID/Password Message appears here -->
+                 {{ form.non_field_errors }}
+
+                <!-- Username Input Field -->
                 <div class="form-group email-group">
 
-                    <label for="email">
-                        Enter your email:
+                    <label for="username">
+                        Enter your University ID / username:
                     </label>
 
                     <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="example@gmail.com"
+                        id="username"
+                        name="username"
+                        type="text"
+                        placeholder="e.g. 2310052"
+                        value="{{ form.username.value|default:'' }}"
                         required
                     >
 
@@ -100,7 +118,7 @@
                     <span>
                         Not a member yet?
 
-                        <a href="#signup">Sign up</a>
+                        <a href="{% url 'accounts:register' %}">Sign up</a>
                     </span>
 
                 </div>

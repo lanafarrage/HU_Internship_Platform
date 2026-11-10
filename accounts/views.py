@@ -23,9 +23,9 @@ def register_student_view(request):
         messages.success(request, "Account created! You can now log in.")
         return redirect("accounts:login")
     return render(request, "accounts/signup.html",
-    {"form": form, "title": "Student Registration"})
+    {"form": form, "is_company": False})
 
-def register_company_view(request)
+def register_company_view(request):
     form = CompanyRegisterForm(request.POST or None)
     if form.is_valid():
         user = form.save(commit=False)
@@ -34,7 +34,7 @@ def register_company_view(request)
         messages.success(request, "Account created! You can now log in.")
         return redirect("accounts:login")
     return render(request, "accounts/signup.html", 
-    {"form": form, "title": "Company Registration"})
+    {"form": form, "is_company": True})
 
 @login_required
 def home_view(request):
