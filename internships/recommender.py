@@ -68,7 +68,7 @@ def cosine(a, b):
     return num / den if den else 0.0
 
 
-def recommend(text, listings, limit=5, min_score=0.03):
+def recommend(text, listings, limit=5, min_score=0.01):
     """Return [{'listing', 'score' (0-100), 'matched' (keywords)}], best first."""
     listings = list(listings)
     user_tokens = tokenize(text)
@@ -82,12 +82,26 @@ def recommend(text, listings, limit=5, min_score=0.03):
     results = []
     for listing, tokens in zip(listings, docs):
         score = cosine(user_vec, vectorize(tokens, idf))
-        if score < min_score:
-            continue
+        
+        # Check for actual keyword overlap to guarantee relevant matches get a boost
         matched = sorted(set(user_tokens) & set(tokens))
+        
+        if score < min_score and not matched:
+            continue
+            
+        # Boost and normalize the score based on cosine similarity and shared keywords
+        if matched:
+            # Scale the raw cosine score, but guarantee a baseline minimum percentage (e.g. 45%+) if keywords match
+            boosted_score = max(score * 600, len(matched) * 15 + 30)
+            final_percentage = int(min(98, max(40, boosted_score)))
+        else:
+            final_percentage = int(score * 100)
+            if final_percentage < min_score:
+                continue
+
         results.append({
             'listing': listing,
-            'score': round(score * 100),
+            'score': final_percentage,
             'matched': matched[:6],
         })
 
