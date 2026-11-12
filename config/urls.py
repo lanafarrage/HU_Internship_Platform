@@ -25,7 +25,7 @@ urlpatterns = [
     path("api/", include("profiles.urls")),
     path("api-auth/", include("rest_framework.urls")),
      path("api/", include("documents.urls")),
-    
+    path('internships/', include('internships.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(
