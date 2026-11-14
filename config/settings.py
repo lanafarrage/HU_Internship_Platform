@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "profiles",
     "documents",
+    "accounts",
+    "dashboards",
+    
 ]
 
 MIDDLEWARE = [
@@ -57,7 +60,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -71,7 +74,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
+LOGIN_URL = "accounts:login"
+LOGIN_REDIRECT_URL = "accounts:home" 
+LOGOUT_REDIRECT_URL = "accounts:login"
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
@@ -131,3 +136,6 @@ MAILERS = {
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+UNIVERSITY_EMAIL_DOMAIN = "students.haigazian.edu.lb"
+AUTH_USER_MODEL = 'accounts.User'

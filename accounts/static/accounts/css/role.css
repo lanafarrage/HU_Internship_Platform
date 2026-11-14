@@ -1,0 +1,386 @@
+/* ==============================
+   GENERAL STYLING
+================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #6C89C5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+}
+
+/* ==============================
+   DECORATIVE BACKGROUND WAVES
+================================= */
+
+.decorative-background {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    width: 55vw;
+    max-width: 850px;
+
+    height: 58vh;
+    max-height: 600px;
+
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.background-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0.9;
+}
+
+/* ==============================
+   TOP BAR
+================================= */
+
+.top-bar {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 32px 32px 0;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: rgba(255, 255, 255, 0.95);
+    text-decoration: none;
+
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+
+    padding: 2px 4px;
+    border-radius: 6px;
+
+    transition: opacity 150ms ease;
+}
+
+.back-link:hover {
+    opacity: 0.8;
+    color: white;
+}
+
+.back-link svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+}
+
+.back-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+/* ==============================
+   MAIN CONTENT
+================================= */
+
+.main-content {
+    position: relative;
+    z-index: 10;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 1280px;
+
+    margin: 0 auto;
+
+    padding: 16px 24px 48px;
+}
+
+/* ==============================
+   SECTION HEADING
+================================= */
+
+.section-heading {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.section-heading h1 {
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.375;
+}
+
+.section-heading p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: normal;
+    margin-top: 8px;
+}
+
+/* ==============================
+   ROLE CARDS
+================================= */
+
+.role-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    width: 100%;
+    max-width: 1024px;
+}
+
+.role-card {
+    display: block;
+    text-align: left;
+
+    background-color: #ECEAE0;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 26px;
+
+    padding: 36px;
+
+    min-height: 300px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.05),
+        0 8px 10px -6px rgba(0, 0, 0, 0.04);
+
+    transition:
+        transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.2s ease;
+}
+
+.role-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 20px 30px -10px rgba(0, 0, 0, 0.12),
+        0 10px 15px -5px rgba(0, 0, 0, 0.06);
+}
+
+.role-card:active {
+    transform: translateY(-1px);
+}
+
+.role-card:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+/* Card Icons */
+
+.card-icon {
+    margin-bottom: 56px;
+}
+
+.card-icon svg {
+    width: 56px;
+    height: 56px;
+
+    color: #111827;
+    stroke-width: 1.8;
+
+    transition: transform 200ms ease;
+}
+
+.role-card:hover .card-icon svg {
+    transform: scale(1.05);
+}
+
+/* Card Text */
+
+.card-details h2 {
+    color: #111827;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.375;
+}
+
+.card-details p {
+    color: #8E9498;
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 8px;
+}
+
+/* ==============================
+   LOGIN FOOTER
+================================= */
+
+.login-footer {
+    text-align: left;
+    margin-top: 56px;
+}
+
+.login-footer p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+}
+
+.login-footer a {
+    color: inherit;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+
+    padding: 0 4px;
+    border-radius: 4px;
+
+    transition: color 150ms ease;
+}
+
+.login-footer a:hover {
+    color: white;
+}
+
+.login-footer a:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+================================= */
+
+/* Small screens */
+@media (min-width: 640px) {
+    .top-bar {
+        padding-top: 44px;
+        padding-left: 32px;
+    }
+
+    .main-content {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .section-heading h1 {
+        font-size: 36px;
+    }
+
+    .section-heading p {
+        font-size: 18px;
+    }
+
+    .role-card {
+        padding: 44px;
+    }
+
+    .card-details h2 {
+        font-size: 28px;
+    }
+
+    .card-details p {
+        font-size: 16px;
+    }
+
+    .login-footer {
+        margin-top: 64px;
+    }
+
+    .login-footer p {
+        font-size: 22px;
+    }
+}
+
+/* Medium screens */
+@media (min-width: 768px) {
+    .top-bar {
+        padding-left: 56px;
+    }
+
+    .main-content {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .section-heading h1 {
+        font-size: 42px;
+    }
+
+    .role-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+    .main-content {
+        padding-left: 64px;
+        padding-right: 64px;
+    }
+
+    .role-cards {
+        gap: 48px;
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+    .top-bar {
+        padding-left: 20px;
+        padding-top: 24px;
+    }
+
+    .main-content {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    .section-heading h1 {
+        font-size: 27px;
+    }
+
+    .role-card {
+        min-height: 260px;
+        padding: 28px;
+    }
+
+    .login-footer p {
+        font-size: 16px;
+    }
+
+    .decorative-background {
+        width: 85vw;
+        height: 40vh;
+    }
+}
