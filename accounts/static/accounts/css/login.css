@@ -1,0 +1,456 @@
+
+/* =========================================
+   1. GLOBAL STYLES
+========================================= */
+
+:root {
+    --app-bg: #6882bb;
+    --login-cream: #ebe9d7;
+    --btn-periwinkle: #9cb4dc;
+    --btn-periwinkle-hover: #8ba5d0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow-x: hidden;
+
+    background-color: var(--app-bg);
+    color: #ffffff;
+
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+}
+
+input,
+button {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+::selection {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+input::placeholder {
+    color: #9ca3af;
+    font-size: 0.8125rem;
+}
+
+
+/* =========================================
+   2. TOP BAR
+========================================= */
+
+.top-bar {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    padding: 32px;
+}
+
+.back-navigation {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: rgba(255, 255, 255, 0.95);
+
+    font-size: 1.0625rem;
+    font-weight: 500;
+
+    transition: opacity 0.15s ease;
+}
+
+.back-navigation:hover {
+    opacity: 0.85;
+}
+
+.back-navigation svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================================
+   3. MAIN CONTENT
+========================================= */
+
+.main-content {
+    position: relative;
+    z-index: 10;
+
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: -40px;
+    padding: 0 24px 80px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 430px;
+}
+
+
+/* =========================================
+   4. HEADING SECTION
+========================================= */
+
+.heading-section {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.heading-section h1 {
+    color: var(--login-cream);
+
+    font-size: 3.25rem;
+    font-weight: 700;
+
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+
+    text-transform: uppercase;
+}
+
+.heading-section p {
+    margin-top: -2px;
+
+    color: rgba(255, 255, 255, 0.95);
+
+    font-size: 2.05rem;
+    font-weight: 400;
+
+    letter-spacing: normal;
+    line-height: 1.375;
+}
+
+
+/* =========================================
+   5. LOGIN FORM
+========================================= */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+
+/* Form Groups */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.email-group {
+    margin-bottom: 20px;
+}
+
+.password-group {
+    margin-bottom: 12px;
+}
+
+
+/* Labels */
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: white;
+
+    font-size: 1.42rem;
+    font-weight: 500;
+
+    letter-spacing: normal;
+}
+
+
+/* Input Fields */
+
+.form-group input {
+    width: 100%;
+    height: 38px;
+
+    padding: 0 14px;
+
+    border: none;
+    border-radius: 9px;
+
+    outline: none;
+
+    background-color: white;
+    color: #1f2937;
+
+    font-size: 0.875rem;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    transition: box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+
+    box-shadow:
+        0 0 0 2px rgba(235, 233, 215, 0.8),
+        0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Password Input */
+
+.password-group input {
+    letter-spacing: 0.1em;
+}
+
+
+/* =========================================
+   6. SIGN UP HINT
+========================================= */
+
+.signup-hint {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    margin-bottom: 24px;
+
+    color: rgba(255, 255, 255, 0.95);
+
+    font-size: 0.98rem;
+}
+
+.signup-hint a {
+    margin-left: 2px;
+
+    color: white;
+    font-weight: 500;
+}
+
+.signup-hint a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   7. SUBMIT BUTTON
+========================================= */
+
+.button-container {
+    display: flex;
+    align-items: center;
+}
+
+.submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 124px;
+    height: 48px;
+
+    border: none;
+    border-radius: 16px;
+
+    background-color: var(--btn-periwinkle);
+    color: white;
+
+    font-size: 1.45rem;
+    font-weight: 400;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    transition: all 0.15s ease;
+}
+
+.submit-button:hover {
+    background-color: var(--btn-periwinkle-hover);
+}
+
+.submit-button:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================
+   8. DECORATIVE BACKGROUND WAVES
+========================================= */
+
+.curved-waves {
+    position: fixed;
+
+    bottom: 0;
+    right: 0;
+
+    z-index: 0;
+
+    width: clamp(340px, 42vw, 620px);
+    height: clamp(260px, 35vw, 500px);
+
+    pointer-events: none;
+}
+
+.waves-svg {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =========================================
+   9. RESPONSIVE DESIGN
+========================================= */
+
+/* Medium screens */
+
+@media (min-width: 768px) {
+
+    .top-bar {
+        padding: 48px;
+    }
+
+    .main-content {
+        margin-top: -56px;
+    }
+
+    .heading-section {
+        margin-bottom: 48px;
+    }
+
+    .heading-section h1 {
+        font-size: 3.75rem;
+    }
+
+    .heading-section p {
+        font-size: 2.35rem;
+    }
+
+    .form-group label {
+        font-size: 1.58rem;
+    }
+
+    .signup-hint {
+        font-size: 1.05rem;
+    }
+
+}
+
+
+/* Large screens */
+
+@media (min-width: 1024px) {
+
+    .top-bar {
+        padding: 64px;
+    }
+
+}
+
+
+/* Small mobile screens */
+
+@media (max-width: 480px) {
+
+    .top-bar {
+        padding: 24px;
+    }
+
+    .main-content {
+        margin-top: -20px;
+        padding: 0 20px 60px;
+    }
+
+    .heading-section h1 {
+        font-size: 2.8rem;
+    }
+
+    .heading-section p {
+        font-size: 1.8rem;
+    }
+
+    .form-group label {
+        font-size: 1.2rem;
+    }
+
+    .signup-hint {
+        font-size: 0.85rem;
+    }
+
+    .submit-button {
+        width: 115px;
+        height: 46px;
+        font-size: 1.3rem;
+    }
+
+    .curved-waves {
+        width: clamp(280px, 75vw, 400px);
+        height: clamp(220px, 60vw, 320px);
+    }
+
+}
+
+.errorlist {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 10px 14px;
+    background-color: #fdecec;      /* soft pink, not white */
+    border: 1px solid #f5c2c0;
+    border-radius: 12px;            /* the round corners */
+    color: #b3261e;                 /* deeper red, easier to read on pink */
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.errorlist li + li {
+    margin-top: 4px;                /* spacing when a field has 2+ errors */
+}
+
+.messages {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+}
+
+.messages .success {
+    color: #0f9d58;
+    font-size: 0.9rem;
+}
+.login-form .errorlist {
+    margin-bottom: 16px;
+}

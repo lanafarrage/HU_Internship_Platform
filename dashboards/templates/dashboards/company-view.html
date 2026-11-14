@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCorp Representative Dashboard | HUIntern</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/company_dashboard.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-icon">
+                    <span class="material-symbols-outlined">domain</span>
+                </div>
+                <div class="brand-copy">
+                    <h1>TechCorp Representative</h1>
+                    <p>Company Management Portal</p>
+                </div>
+            </div>
+
+            <nav class="portal-nav" aria-label="Portal Navigation">
+                <a href="#" class="nav-link">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="material-symbols-outlined">work</span>
+                    <span>Internships</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="material-symbols-outlined">group</span>
+                    <span>Applicants</span>
+                </a>
+                <a href="#" class="nav-link messages-link">
+                    <span class="nav-icon-wrap">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                        <span class="notification-dot"></span>
+                    </span>
+                    <span>Messages</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <div class="dashboard-grid">
+                <div class="main-column">
+                    <section class="panel internships-panel">
+                        <div class="panel-heading">
+                            <h2>Posted Internships</h2>
+                            <button class="primary-button add-button" type="button">+ Add Internship</button>
+                        </div>
+                        <div class="section-rule rule-wide"></div>
+
+                        <div class="internship-list">
+                            <article class="internship-item">
+                                <div class="internship-info">
+                                    <div class="internship-title-row">
+                                        <h3>Frontend Web Developer</h3>
+                                        <span class="status-pill">Active</span>
+                                    </div>
+                                    <p class="muted-text">Haigazian CS Dept • Summer 2026</p>
+                                    <div class="applicant-count-wrap">
+                                        <span class="applicant-count">16 Applicants</span>
+                                    </div>
+                                </div>
+                                <div class="internship-actions">
+                                    <button class="primary-button small-button" type="button">View Applicants</button>
+                                    <button class="icon-button" type="button" aria-label="Edit Listing">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                </div>
+                            </article>
+
+                            <article class="internship-item">
+                                <div class="internship-info">
+                                    <div class="internship-title-row">
+                                        <h3>UI/UX Product Designer</h3>
+                                        <span class="status-pill">Active</span>
+                                    </div>
+                                    <p class="muted-text">Graphic Design &amp; CS Dept • Fall 2026</p>
+                                    <div class="applicant-count-wrap">
+                                        <span class="applicant-count">14 Applicants</span>
+                                    </div>
+                                </div>
+                                <div class="internship-actions">
+                                    <button class="primary-button small-button" type="button">View Applicants</button>
+                                    <button class="icon-button" type="button" aria-label="Edit Listing">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                </div>
+                            </article>
+
+                            <article class="internship-item internship-item-last">
+                                <div class="internship-info">
+                                    <div class="internship-title-row">
+                                        <h3>AI &amp; Data Science Intern</h3>
+                                        <span class="status-pill">Active</span>
+                                    </div>
+                                    <p class="muted-text">Faculty of Sciences • Research Track</p>
+                                    <div class="applicant-count-wrap">
+                                        <span class="applicant-count">8 Applicants</span>
+                                    </div>
+                                </div>
+                                <div class="internship-actions">
+                                    <button class="primary-button small-button" type="button">View Applicants</button>
+                                    <button class="icon-button" type="button" aria-label="Edit Listing">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="panel company-overview-panel">
+                        <div class="panel-heading">
+                            <h2>Company Profile &amp; Overview</h2>
+                            <button class="icon-button" type="button" aria-label="Edit Profile">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                        </div>
+                        <div class="section-rule rule-medium"></div>
+                        <p class="overview-text">
+                            TechCorp Solutions is an industry-leading software consultancy partnering with Haigazian University to offer accredited internships in web development, system architecture, and UI/UX design.
+                        </p>
+                    </section>
+                </div>
+
+                <aside class="sidebar-column">
+                    <section class="panel company-details-panel">
+                        <div class="panel-heading">
+                            <h2>Company Details</h2>
+                            <button class="icon-button" type="button" aria-label="Edit Details">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                        </div>
+
+                        <div class="details-list">
+                            <div class="detail-row">
+                                <span class="material-symbols-outlined detail-icon">apartment</span>
+                                <div>
+                                    <p class="detail-label">Company</p>
+                                    <p class="detail-value">TechCorp Solutions S.A.L.</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <span class="material-symbols-outlined detail-icon">category</span>
+                                <div>
+                                    <p class="detail-label">Industry</p>
+                                    <p class="detail-value">Software Engineering &amp; AI</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <span class="material-symbols-outlined detail-icon">mail</span>
+                                <div>
+                                    <p class="detail-label">Email</p>
+                                    <p class="detail-value">recruitment@techcorp.io</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <span class="material-symbols-outlined detail-icon">call</span>
+                                <div>
+                                    <p class="detail-label">Phone</p>
+                                    <p class="detail-value">+961 1 349 200</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <span class="material-symbols-outlined detail-icon">location_on</span>
+                                <div>
+                                    <p class="detail-label">Location</p>
+                                    <p class="detail-value">Beirut Central District, Lebanon</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="panel recent-applicants-panel">
+                        <div class="panel-heading applicants-heading">
+                            <h2>Recent Applicants</h2>
+                            <a class="view-all-link" href="#">View All</a>
+                        </div>
+
+                        <div class="recent-applicants-list">
+                            <article class="applicant-card">
+                                <div class="applicant-identity">
+                                    <div class="avatar avatar-blue">LF</div>
+                                    <div>
+                                        <p class="applicant-name">Lana Bou Farrage</p>
+                                        <p class="applicant-role">Frontend Developer</p>
+                                    </div>
+                                </div>
+                                <button class="review-button" type="button">Review CV</button>
+                            </article>
+
+                            <article class="applicant-card">
+                                <div class="applicant-identity">
+                                    <div class="avatar avatar-indigo">MK</div>
+                                    <div>
+                                        <p class="applicant-name">Mark Khoury</p>
+                                        <p class="applicant-role">AI / Data Science</p>
+                                    </div>
+                                </div>
+                                <button class="review-button" type="button">Review CV</button>
+                            </article>
+
+                            <article class="applicant-card">
+                                <div class="applicant-identity">
+                                    <div class="avatar avatar-green">NT</div>
+                                    <div>
+                                        <p class="applicant-name">Nour Tabbara</p>
+                                        <p class="applicant-role">UI/UX Design</p>
+                                    </div>
+                                </div>
+                                <button class="review-button" type="button">Review CV</button>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="panel advisory-panel">
+                        <h2>Academic Advisory</h2>
+                        <p>Direct point of contact for Haigazian University placement &amp; credit accreditation.</p>
+                        <a class="contact-link" href="#">
+                            <span class="material-symbols-outlined">mail</span>
+                            <span>Contact Dr. Kevorkian</span>
+                        </a>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <div class="decorative-background" aria-hidden="true">
+        <svg viewBox="0 0 700 550" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path d="M-100,500 C150,550 180,300 350,420 C500,520 20,250 -50,150" stroke="#10B981" stroke-opacity="0.6" stroke-width="1.2"></path>
+            <path d="M-120,440 C120,490 220,280 400,380 C540,460 60,200 -70,80" stroke="#EC4899" stroke-opacity="0.5" stroke-width="1.2"></path>
+            <path d="M-150,380 C80,420 240,240 450,350 C580,420 100,160 -90,20" stroke="#3B82F6" stroke-opacity="0.6" stroke-width="1.2"></path>
+        </svg>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>© 2024 Haigazian University. HUIntern Industry Partnership Network.</div>
+            <nav class="footer-links" aria-label="Footer Navigation">
+                <a href="#">Support Desk</a>
+                <a href="#">Employer Terms</a>
+                <a href="#">Privacy Policy</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
