@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "profiles",
     "documents",
     "accounts",
+    "dashboards",
+    
 ]
 
 MIDDLEWARE = [

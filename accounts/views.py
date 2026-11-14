@@ -1,13 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .forms import StudentReisterForm, CompanyRegisterForm
+from .forms import StudentRegisterForm, CompanyRegisterForm
+from django.urls import reverse
 
 def register_choice_view(request):
     error = None
     if request.method == "POST":
         choice = request.POST.get("account_type")
-        if choice == "student"
+        if choice == "student":
             return redirect("accounts:register_student")
         if choice == "company":
             return redirect("accounts:register_company")
@@ -51,4 +52,22 @@ def home_view(request):
         messages.error(request, "Invalid role. Please contact support.")
         return redirect("accounts:login")
 
+ROLE_HOME = {
+    "student": "dashboards:student",
+    "company_rep": "dashboards:company",
+    "coordinator": "dashboards:coordinator",
+    "supervisor": "dashboards:supervisor",
+}
+
+
+class CustomLoginView(SuccessMessageMixin, LoginView):
+    template_name = "accounts/login.html"
+    authentication_form = LoginForm
+    redirect_authenticated_user = True
+    success_message = "Successfully logged in!"
+
+    def get_success_url(self):
+        # go back to the page they wanted, otherwise to their role's dashboard
+        return self.get_redirect_url() or reverse(
+            ROLE_HOME.get(self.request.user.role, "accounts:home"))
 

@@ -13,7 +13,7 @@ class StudentRegisterForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data["email"].lower()
         domain = settings.UNIVERSITY_EMAIL_DOMAIN
-        if not email.endswith
+        if not email.endswith(f"@{domain}"):
             raise forms.ValidationError(f"Please use your university email address (@{domain}).")
         return email
 
