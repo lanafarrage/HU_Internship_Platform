@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "documents",
     "accounts",
     "dashboards",
-    
+    "listings",
 ]
 
 MIDDLEWARE = [

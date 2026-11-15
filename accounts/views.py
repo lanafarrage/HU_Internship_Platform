@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import StudentRegisterForm, CompanyRegisterForm
 from django.urls import reverse
+from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
+from .forms import LoginForm
 
 def register_choice_view(request):
     error = None

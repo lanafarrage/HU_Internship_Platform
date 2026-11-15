@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from accounts.permissions import role_required
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 @role_required("student")
 def student_dashboard(request):
     return render(request, "dashboards/student.html")
