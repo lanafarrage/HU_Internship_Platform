@@ -42,18 +42,12 @@ def register_company_view(request):
 
 @login_required
 def home_view(request):
-    user = request.user
-    if user.role == "student":
-        return render(request, "accounts/student_home.html")
-    elif user.role == "coordinator":
-        return render(request, "accounts/coordinator_home.html")
-    elif user.role == "supervisor":
-        return render(request, "accounts/supervisor_home.html")
-    elif user.role == "company_rep":
-        return render(request, "accounts/company_home.html")
-    else:
-        messages.error(request, "Invalid role. Please contact support.")
-        return redirect("accounts:login")
+    target = ROLE_HOME.get(request.user.role)
+    if target:
+        return redirect(target)
+    messages.error(request, "Invalid role. Please contact support.")
+    return redirect("accounts:login")
+
 
 ROLE_HOME = {
     "student": "dashboards:student",
