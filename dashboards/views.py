@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -12,7 +14,12 @@ from .models import Internship
 
 @role_required("student")
 def student_dashboard(request):
-    return render(request, "dashboards/student.html")
+    # closed (archived) or expired internships are never shown to students
+    open_internships = Internship.objects.filter(
+        is_open=True, deadline__gte=date.today()
+    ).select_related("company")
+    return render(request, "dashboards/student.html",
+                  {"internships": open_internships})
 
 
 @role_required("company_rep")

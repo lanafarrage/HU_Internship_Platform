@@ -4,8 +4,21 @@
 {% block content %}
   <h1>Welcome, {{ user.first_name|default:user.username }}!</h1>
 
-  <h2>Recommended for you</h2>
-  <p>Coming soon.</p>
+  <p><a href="/api/profile/me/">My profile, CV and skills</a></p>
+
+  <h2>Open internships</h2>
+  {% for internship in internships %}
+    <article>
+      <h3>{{ internship.title }}</h3>
+      <p>{{ internship.company.company_name|default:internship.company.username }}
+         &bull; {{ internship.location }}{% if internship.duration %} &bull; {{ internship.duration }}{% endif %}
+         &bull; Apply by {{ internship.deadline|date:"M d, Y" }}</p>
+      <p>{{ internship.description|truncatewords:40 }}</p>
+      <p><strong>Skills:</strong> {{ internship.required_skills }}</p>
+    </article>
+  {% empty %}
+    <p>No open internships right now.</p>
+  {% endfor %}
 
   <h2>My applications</h2>
   <p>Coming soon.</p>

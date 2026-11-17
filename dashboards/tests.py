@@ -94,3 +94,34 @@ class InternshipTests(TestCase):
         r = self.client.get(reverse("dashboards:company"))
         self.assertContains(r, "Mine")
         self.assertNotContains(r, "Theirs")
+
+
+class StudentVisibilityTests(TestCase):
+    def setUp(self):
+        self.rep = User.objects.create_user(
+            "rep9", "rep9@x.com", "pass12345", role="company_rep", company_name="Acme")
+        self.student = User.objects.create_user(
+            "2510001", "s@students.haigazian.edu.lb", "pass12345", role="student")
+
+    def make(self, title, **kw):
+        return Internship.objects.create(
+            company=self.rep, title=title, description="d", required_skills="s",
+            deadline=kw.get("deadline", date.today() + timedelta(days=10)),
+            location="Beirut", is_open=kw.get("is_open", True))
+
+    def test_student_sees_open_but_not_closed_or_expired(self):
+        self.make("OpenOne")
+        self.make("ClosedOne", is_open=False)
+        self.make("ExpiredOne", deadline=date.today() - timedelta(days=1))
+        self.client.force_login(self.student)
+        r = self.client.get(reverse("dashboards:student"))
+        self.assertContains(r, "OpenOne")
+        self.assertNotContains(r, "ClosedOne")
+        self.assertNotContains(r, "ExpiredOne")
+
+    def test_student_can_log_in_with_id_or_email(self):
+        for ident in ("2510001", "s@students.haigazian.edu.lb"):
+            self.client.logout()
+            r = self.client.post(reverse("accounts:login"),
+                                 {"username": ident, "password": "pass12345"})
+            self.assertEqual(r.status_code, 302, ident)

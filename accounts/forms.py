@@ -42,3 +42,11 @@ class LoginForm(AuthenticationForm):
         **AuthenticationForm.error_messages,
         "invalid_login": "Invalid credentials. Please check your ID/username and password.",
     }
+
+    def clean_username(self):
+        value = self.cleaned_data["username"].strip()
+        if "@" in value:   # allow logging in with the email too
+            user = User.objects.filter(email__iexact=value).first()
+            if user:
+                return user.username
+        return value
