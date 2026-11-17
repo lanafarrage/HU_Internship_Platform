@@ -19,10 +19,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import include, path
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView,TemplateView
+
 
 urlpatterns = [
-    path("", RedirectView.as_view(pattern_name="accounts:login", permanent=False)),
+    path('', TemplateView.as_view(template_name='welcome.html'), name='welcome'),
     path("admin/", admin.site.urls),
     path("api/", include("profiles.urls")),
     path("api-auth/", include("rest_framework.urls")),

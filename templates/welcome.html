@@ -1,0 +1,503 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- landing page -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HUIntern - Haigazian University Internship Portal</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <!-- Change this line in your index.html -->
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+</head>
+
+<body>
+
+    <!-- BEGIN: MainHeader -->
+    <header class="main-header" data-purpose="navigation-bar">
+
+        <!-- Brand Logo and Identity -->
+        <div class="brand-identity">
+            <span class="brand-name">HUIntern</span>
+
+            <!-- Haigazian University Seal Logo -->
+            <div class="university-logo">
+                <svg class="logo-svg" fill="currentColor" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" fill="none" r="46" stroke="currentColor" stroke-dasharray="2 2" stroke-width="3"></circle>
+                    <circle cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-width="1.5"></circle>
+                    <path d="M50 18 L53 30 L65 30 L55 38 L59 50 L50 43 L41 50 L45 38 L35 30 L47 30 Z" fill="currentColor"></path>
+                    <text fill="currentColor" font-size="8" font-weight="bold" text-anchor="middle" x="50" y="70">HAIGAZIAN</text>
+                    <text fill="currentColor" font-size="6.5" text-anchor="middle" x="50" y="80">1955</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+
+            <input type="text" placeholder="Want to learn?">
+
+            <div class="search-category">
+                <span>Explore</span>
+
+                <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-navigation">
+            <a class="active-link" href="{% url 'welcome' %}">Home</a>
+            <a href="#">About us</a>
+            <a href="#">Collaboration</a>
+            <a href="#">Contact us</a>
+            <a href="#">FAQ's</a>
+            <a href="{% url 'accounts:login' %}">Sign in</a>
+            <a class="create-account-btn" href="{% url 'accounts:register' %}">Create free account</a>
+        </nav>
+
+    </header>
+    <!-- END: MainHeader -->
+
+
+    <!-- BEGIN: HeroSection -->
+    <section class="hero-section">
+
+        <!-- Decorative Circles -->
+        <div class="decorative-circle"></div>
+
+        <div class="hero-grid">
+
+            <!-- Left Column -->
+            <div class="hero-content">
+
+                <div class="hero-heading-wrapper">
+                    <div class="heading-dot"></div>
+
+                    <h1>
+                        Up Your <span class="accent-cyan">Skills</span><br>
+                        To <span class="accent-coral">Advance</span> Your<br>
+                        <span class="accent-green">Career</span> Path
+                    </h1>
+                </div>
+
+                <p class="hero-description">
+                    Find Internship opportunities with HUIntern . The latest online internship system and material that help your knowledge growing.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="hero-buttons">
+                    <button class="primary-btn">Get Started</button>
+                    <button class="secondary-btn">Sign up!</button>
+                </div>
+
+                <!-- Attribute Pills -->
+                <div class="attribute-pills">
+
+                    <div class="attribute">
+                        <span class="attribute-icon icon-amber">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </span>
+                        <span>Public Speaking</span>
+                    </div>
+
+                    <div class="attribute">
+                        <span class="attribute-icon icon-rose">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </span>
+                        <span>Career-Oriented</span>
+                    </div>
+
+                    <div class="attribute">
+                        <span class="attribute-icon icon-purple">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </span>
+                        <span>Creative Thinking</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Right Column -->
+            <div class="hero-visual">
+
+                <div class="hero-image-circle">
+                    <img
+                        alt="University mentor and graduate"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbMvLdlKwfylOdL-9_6DIDRIEwv_FB9NQx97CMimwUocBmK83ol_L_JF70SCMURk57p7l_5yKSNVhrRepqY_cMHSI3W5bW1-_tOH6pGLBw2cxDNtiP03Fr__ZZYwbpkOeZghfYr1wCT_eDwCS2X_Rv93tp1GphTuVR6Rwwz6uuvqs1YfTS8pfjzlaVUQjqvcLPao9mogVuLU3kMJrW6jMJJYpqJjYCTEb5E1NH847T"
+                    >
+                </div>
+
+                <!-- Badge 1 -->
+                <div class="opportunities-badge">
+                    <div class="progress-icon">
+                        <svg viewBox="0 0 36 36">
+                            <path class="progress-background" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+                            <path class="progress-value" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-linecap="round" stroke-width="3.5"></path>
+                        </svg>
+                    </div>
+
+                    <span class="badge-number">50+</span>
+                    <span class="badge-description">Internship Opportunities</span>
+                </div>
+
+                <!-- Badge 2 -->
+                <div class="courses-badge">
+                    <div class="badge-icon icon-pink">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <div class="badge-number">20+</div>
+                        <div class="badge-description">Video Courses</div>
+                    </div>
+                </div>
+
+                <!-- Badge 3 -->
+                <div class="companies-badge">
+                    <div class="badge-icon icon-emerald">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <div class="badge-description">Companies</div>
+                        <div class="badge-number">10+</div>
+                    </div>
+                </div>
+
+                <!-- Decorative Dots -->
+                <div class="blue-dot"></div>
+                <div class="cyan-dot"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Collaboration Logos -->
+        <div class="collaboration-bar" data-purpose="partner-logos">
+
+            <div class="collaboration-count">
+                <span>10+</span>
+                <p>Collaboration</p>
+            </div>
+
+            <div class="partner-logos">
+
+                <div class="inmind-logo">
+                    <span class="inmind-symbol">▲</span>
+                    <span>inmind.<span class="inmind-light">ai</span></span>
+                </div>
+
+                <div class="tedmob-logo">
+                    TED<span>MOB</span>
+                </div>
+
+                <div class="bank-logo">
+                    Bank Audi
+                </div>
+
+                <div class="et3-logo">
+                    ET<span>3</span><span class="et3-labs">LΛB5</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- END: HeroSection -->
+
+
+    <!-- BEGIN: ServicesSection -->
+    <section class="services-section" data-purpose="services-overview">
+
+        <div class="section-heading">
+            <p>Our Services</p>
+
+            <h2>
+                Fostering a playful &amp; engaging learning<br class="desktop-break">
+                environment
+            </h2>
+        </div>
+
+        <div class="services-grid">
+
+            <!-- Card 1 -->
+            <div class="service-card featured-card">
+
+                <div>
+                    <div class="service-title">
+                        <div class="service-icon featured-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </div>
+
+                        <h3>Find Internships</h3>
+                    </div>
+
+                    <p>
+                        Find positions that match your field, interests, and skills.
+                    </p>
+                </div>
+
+                <div class="learn-more">
+                    <a href="#">Learn More <span>&gt;</span></a>
+                </div>
+
+            </div>
+
+
+            <!-- Card 2 -->
+            <div class="service-card">
+
+                <div>
+                    <div class="service-title">
+                        <div class="service-icon application-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </div>
+
+                        <h3>Manage Applications</h3>
+                    </div>
+
+                    <p>
+                        Submit internship applications, upload required documents, and keep track of your application status in one place.
+                    </p>
+                </div>
+
+                <div class="learn-more">
+                    <a href="#">Learn More <span>&gt;</span></a>
+                </div>
+
+            </div>
+
+
+            <!-- Card 3 -->
+            <div class="service-card">
+
+                <div>
+                    <div class="service-title">
+                        <div class="service-icon tracking-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </div>
+
+                        <h3>Track Your Internship</h3>
+                    </div>
+
+                    <p>
+                        Stay organized throughout your journey, and stay updated on important deadlines.
+                    </p>
+                </div>
+
+                <div class="learn-more">
+                    <a href="#">Learn More <span>&gt;</span></a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- END: ServicesSection -->
+
+
+    <!-- BEGIN: NewsAndPartnershipsSection -->
+    <section class="news-section" data-purpose="partnerships-news">
+
+        <div class="news-container">
+
+            <div class="news-grid">
+
+                <!-- Main Article -->
+                <article class="main-article">
+
+                    <div class="main-article-image">
+                        <img
+                            alt="Haigazian University and TEDMOB Sign MOU"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7MZpKaXsnvwV4MmrfQ4goocklxweVHwUZFyttnIMNV5hBHwAEUUZey2Aj64ZKH2jgM8ore7XZ9vCh_GFEfa-RAXjeJCVO_v4ODIYXkvLYWNxdB4Tp59DND0DaX4JlbstkstBGFp5TpxVlZA4bczv7eR9vhSbrpkx0nL9vwpgTDVe7KBcezSyiRrZny5uBgfB0BduRU-rs1_czb_SnQpCB5qb9049ldg3C5kKTYCfX"
+                        >
+                    </div>
+
+                    <span class="article-date">FEB 25, 2026</span>
+
+                    <h3>
+                        Haigazian University And TEDMOB Sign MOU To Empower The Next Generation Of Digital Innovators
+                    </h3>
+
+                </article>
+
+
+                <!-- Secondary Articles -->
+                <div class="secondary-articles">
+
+                    <!-- Article 2 -->
+                    <article class="secondary-article">
+
+                        <div class="secondary-article-text">
+                            <h4>
+                                InMind.Ai Joins Forces With Haigazian University To Train The Next Generation Of AI Leaders
+                            </h4>
+                        </div>
+
+                        <div class="secondary-article-image">
+                            <img
+                                alt="InMind.Ai Joins Forces With Haigazian University"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr06QBpoOF33n8jCu_LvK51AolF4QD4I7jYIKQscmv5ugF5ryS4F6qam5RobOgZfsHwwR9-DoYRfOC0NuaELuJU_Z7X1ozvylJuHjKXl1cb0hERSeBeik8fJ9p7InoGntHr_T037WTPORRMaQC-UTYhBm-EBcYorDFn5L1kyQe43VdaFCzNzWe48WBIT4GEDPzDYOg3hWIfzuFN24O-IEHwS4nPZQxF5GSRz0HQv1M"
+                            >
+                        </div>
+
+                    </article>
+
+                    <hr>
+
+                    <!-- Article 3 -->
+                    <article class="secondary-article second-secondary-article">
+
+                        <div class="secondary-article-image">
+                            <img
+                                alt="ET3 Labs Strategic Agreement"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe6B_os36TwBnyNp9DkXXXk0p9gII9bO-7adODRMJctnPdKkGmo8y2D2FIiKLyChotFrHigKmGutLFDAb0G-79Zw79bieUVOkkOy0J9nMSXRKDzFbL-geOtyUCSXd4Gmv8WzyxnSuIZ1qdFMPCPV7jnzqzK4CQKfFYrlysRa_IHnudKCdlGfwkIwb4-UmrnrYDKkxQV-bJxf9SDJ1HBXULmjUEm-JUzx3irRCDZidc"
+                            >
+                        </div>
+
+                        <div class="secondary-article-text">
+                            <h4>
+                                Driving Educational Innovation: ET3 Labs Signs Strategic Agreement With Haigazian University
+                            </h4>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- END: NewsAndPartnershipsSection -->
+
+
+    <!-- BEGIN: MainFooter -->
+    <footer class="main-footer" data-purpose="site-footer">
+
+        <div class="footer-container">
+
+            <div class="footer-grid">
+
+                <!-- Brand Column -->
+                <div class="footer-brand">
+
+                    <div class="footer-logo">
+                        <svg fill="currentColor" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" fill="none" r="46" stroke="currentColor" stroke-dasharray="2 2" stroke-width="3"></circle>
+                            <circle cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-width="1.5"></circle>
+                            <path d="M50 18 L53 30 L65 30 L55 38 L59 50 L50 43 L41 50 L45 38 L35 30 L47 30 Z" fill="currentColor"></path>
+                            <text fill="currentColor" font-size="8" font-weight="bold" text-anchor="middle" x="50" y="70">HAIGAZIAN</text>
+                            <text fill="currentColor" font-size="6.5" text-anchor="middle" x="50" y="80">1955</text>
+                        </svg>
+                    </div>
+
+                    <p>
+                        Top learning experiences that create more talent in the world.
+                    </p>
+
+                </div>
+
+
+                <!-- Footer Links -->
+                <div class="footer-links">
+
+                    <!-- Product -->
+                    <div>
+                        <h5>Product</h5>
+
+                        <ul>
+                            <li><a href="#">Overview</a></li>
+                            <li><a href="#">Features</a></li>
+                            <li><a href="#">Solutions</a></li>
+                            <li><a href="#">Tutorials</a></li>
+                            <li><a href="#">Pricing</a></li>
+                        </ul>
+                    </div>
+
+
+                    <!-- Company -->
+                    <div>
+                        <h5>Company</h5>
+
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li class="press-link">
+                                <a href="#">Press</a>
+                                <span>New</span>
+                            </li>
+                            <li><a href="#">News</a></li>
+                        </ul>
+                    </div>
+
+
+                    <!-- Social -->
+                    <div>
+                        <h5>Social</h5>
+
+                        <ul>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Dribbble</a></li>
+                        </ul>
+                    </div>
+
+
+                    <!-- Legal -->
+                    <div>
+                        <h5>Legal</h5>
+
+                        <ul>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Cookies</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+    <!-- END: MainFooter -->
+
+</body>
+</html>
