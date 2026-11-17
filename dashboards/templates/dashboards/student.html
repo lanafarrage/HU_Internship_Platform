@@ -3,10 +3,10 @@
 
 {% block content %}
   <h1>Welcome, {{ user.first_name|default:user.username }}!</h1>
-
-  <h2>Recommended for you</h2>
-  <p>Coming soon.</p>
-
-  <h2>My applications</h2>
-  <p>Coming soon.</p>
+  <p>
+    <a href="{% url 'student_profile' %}">My profile</a> . 
+    <a href="{% url 'browse_internships' %}">Show me all internships</a> ·
+    <a href="{% url 'recommended_internships' %}">Recommended for you</a> ·
+    <a href="{% url 'my_applications' %}">My applications</a>
+  </p>
 {% endblock %}

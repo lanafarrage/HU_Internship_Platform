@@ -83,35 +83,39 @@
     </form>
 
     <div class="content">
-        {% for listing in listings %}
-            <div class="card">
-                <h3>{{ listing.title }}</h3>
-                <div class="meta-info">
-                    {% if listing.category == 'Software Engineering' %}
-                        <span class="badge badge-software">Software Engineering</span>
-                    {% elif listing.category == 'Data Science' %}
-                        <span class="badge badge-data">Data Science</span>
-                    {% elif listing.category == 'Cybersecurity' %}
-                        <span class="badge badge-cyber">Cybersecurity</span>
-                    {% else %}
-                        <span class="badge badge-it">{{ listing.category }}</span>
-                    {% endif %}
-
-                    <span class="badge badge-location">📍 {{ listing.location }}</span>
-                    <span style="font-size: 14px; color: #64748b;">Deadline: {{ listing.deadline }}</span>
-                </div>
-                <p class="description">{{ listing.description }}</p>
-                <div class="requirements">
-                    <strong>Requirements:</strong> {{ listing.requirements }}
-                </div>
-
-                <div class="apply-wrap">
-                    <a href="{% url 'apply_internship' listing.pk %}" class="btn-apply">Apply Now</a>
-                </div>
-            </div>
-        {% empty %}
-            <p style="text-align: center; color: #64748b; font-size: 16px; padding: 40px 0;">No internships found matching your criteria.</p>
-        {% endfor %}
+       {% for listing in listings %}
+    <div class="card">
+        <h3>{{ listing.title }}</h3>
+        <div class="meta-info">
+            {% if listing.category == 'Software Engineering' %}
+                <span class="badge badge-software">Software Engineering</span>
+            {% elif listing.category == 'Data Science' %}
+                <span class="badge badge-data">Data Science</span>
+            {% elif listing.category == 'Cybersecurity' %}
+                <span class="badge badge-cyber">Cybersecurity</span>
+            {% else %}
+                <span class="badge badge-it">{{ listing.category }}</span>
+            {% endif %}
+            <span class="badge badge-location">📍 {{ listing.location }}</span>
+            <span class="badge badge-location">🏢 {{ listing.company.company_name|default:listing.company.username }}</span>
+            {% if listing.duration %}<span class="badge badge-location">⏱ {{ listing.duration }}</span>{% endif %}
+            <span style="font-size: 14px; color: #64748b;">Deadline: {{ listing.deadline }}</span>
+        </div>
+        <p class="description">{{ listing.description }}</p>
+        <div class="requirements">
+            <strong>Required skills:</strong> {{ listing.required_skills }}
+        </div>
+        <div class="apply-wrap">
+            {% if listing.pk in applied_ids %}
+                <span class="btn-apply" style="background: #94a3b8;">Applied ✓</span>
+            {% else %}
+                <a href="{% url 'apply_internship' listing.pk %}" class="btn-apply">Apply Now</a>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <p style="text-align: center; color: #64748b; font-size: 16px; padding: 40px 0;">No internships found matching your criteria.</p>
+{% endfor %}
     </div>
 
 </body>

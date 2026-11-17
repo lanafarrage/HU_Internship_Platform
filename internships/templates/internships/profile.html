@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; }
+        .header { background: #e0f2fe; padding: 45px 40px; display: flex; align-items: center; }
+        .back-btn { text-decoration: none; color: #0284c7; font-weight: 600; padding: 8px 16px; background: white; border-radius: 8px; }
+        .header h1 { flex-grow: 1; text-align: center; margin: 0; font-size: 30px; color: #0f172a; }
+        .content { max-width: 800px; margin: 30px auto; padding: 0 20px 60px; }
+        .card { background: white; padding: 24px; margin-bottom: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .card h2 { margin-top: 0; font-size: 20px; }
+        .field { margin-bottom: 16px; }
+        .field label { display: block; font-weight: 600; margin-bottom: 6px; }
+        .field input[type=text], .field textarea { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 14px; }
+        .help { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .error { color: #991b1b; font-size: 14px; margin-top: 4px; }
+        .btn { background: #0284c7; color: white; border: none; padding: 10px 18px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; }
+        .btn-small { background: none; border: none; color: #991b1b; cursor: pointer; font-size: 14px; padding: 0 0 0 6px; }
+        .chip { display: inline-flex; align-items: center; background: #dbeafe; color: #1e40af; padding: 5px 12px; border-radius: 16px; font-size: 14px; font-weight: 600; margin: 4px 6px 0 0; }
+        .chip form { display: inline; }
+        .add-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+        .add-row input[type=text] { flex: 2; min-width: 180px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
+        .add-row select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
+        .msg { padding: 14px 18px; border-radius: 10px; font-weight: 600; margin-bottom: 20px; }
+        .msg-success { background: #dcfce7; color: #166534; }
+        .msg-error { background: #fee2e2; color: #991b1b; }
+        .empty { color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="{% url 'browse_internships' %}" class="back-btn">&larr; Browse</a>
+        <h1>My profile</h1>
+    </div>
+
+    <div class="content">
+        {% for message in messages %}
+            <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+
+        <div class="card">
+            <h2>My skills</h2>
+            <p class="help">Type skills the way companies write them, for example <em>Python, SQL, Docker</em>.</p>
+
+            <form method="post" class="add-row">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add_skill">
+                <input type="text" name="skill" placeholder="Python, Django, SQL">
+                <select name="level">
+                    <option value="">Level (optional)</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+                <button type="submit" class="btn">Add</button>
+            </form>
+
+            {% for ss in skills %}
+                <span class="chip">
+                    {{ ss.skill.name }}{% if ss.level %} · {{ ss.level }}{% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="remove_skill">
+                        <input type="hidden" name="skill_id" value="{{ ss.pk }}">
+                        <button type="submit" class="btn-small" title="Remove">✕</button>
+                    </form>
+                </span>
+            {% empty %}
+                <p class="empty">No skills yet. Add some to get recommendations.</p>
+            {% endfor %}
+        </div>
+
+        <div class="card">
+            <h2>About me and CV</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="save_profile">
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+                        {% for e in field.errors %}<div class="error">{{ e }}</div>{% endfor %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn">Save profile</button>
+            </form>
+        </div>
+
+        <p><a href="{% url 'recommended_internships' %}">See my recommendations →</a></p>
+    </div>
+</body>
+</html>

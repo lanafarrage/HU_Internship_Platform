@@ -5,4 +5,6 @@ urlpatterns = [
     path('browse/', views.browse_internships, name='browse_internships'),
     path('apply/<int:pk>/', views.apply_internship, name='apply_internship'),
     path('recommended/', views.recommended_internships, name='recommended_internships'),
+    path('my-applications/', views.my_applications, name='my_applications'),  
+    path('profile/', views.student_profile, name='student_profile'),
 ]

@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import InternshipListing, InternshipApplication
+from .models import InternshipApplication
 
-admin.site.register(InternshipListing)
-admin.site.register(InternshipApplication)
+
+@admin.register(InternshipApplication)
+class InternshipApplicationAdmin(admin.ModelAdmin):
+    list_display = ("student", "listing", "status", "applied_at")
+    list_filter = ("status",)

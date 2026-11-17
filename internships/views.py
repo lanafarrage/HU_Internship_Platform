@@ -5,9 +5,10 @@ from django.utils import timezone
 
 from accounts.permissions import role_required
 from dashboards.models import Internship
-from profiles.models import StudentProfile
+from profiles.models import Skill, StudentProfile, StudentSkill
+from .forms import StudentProfileForm
 from .models import InternshipApplication
-from .recommender import profile_text, recommend
+from .recommender import parse_skills, profile_text, recommend
 
 
 def get_student_profile(request):
@@ -108,3 +109,53 @@ def my_applications(request):
         .order_by('-applied_at')
     )
     return render(request, 'internships/my_applications.html', {'applications': applications})
+
+
+@role_required("student")
+def student_profile(request):
+    profile = get_student_profile(request)
+    form = StudentProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        if action == 'save_profile':
+            old_cv = profile.cv.name if profile.cv else None
+            form = StudentProfileForm(request.POST, request.FILES, instance=profile)
+            if form.is_valid():
+                form.save()
+                if old_cv and old_cv != profile.cv.name:
+                    profile.cv.storage.delete(old_cv)
+                messages.success(request, "Profile saved.")
+                return redirect('student_profile')
+
+        elif action == 'add_skill':
+            level = request.POST.get('level', '')
+            if level not in ('beginner', 'intermediate', 'advanced'):
+                level = ''
+            names = parse_skills(request.POST.get('skill', ''))
+            if not names:
+                messages.error(request, "Type at least one skill.")
+            for name in names:
+                name = name[:80]
+                skill = Skill.objects.filter(name__iexact=name).first() or Skill.objects.create(name=name)
+                StudentSkill.objects.get_or_create(
+                    profile=profile, skill=skill, defaults={'level': level}
+                )
+            if names:
+                messages.success(request, "Skills updated.")
+            return redirect('student_profile')
+
+        elif action == 'remove_skill':
+            skill_id = request.POST.get('skill_id', '')
+            if skill_id.isdigit():
+                StudentSkill.objects.filter(pk=skill_id, profile=profile).delete()
+                messages.success(request, "Skill removed.")
+            return redirect('student_profile')
+
+    skills = profile.student_skills.select_related('skill').order_by('skill__name')
+    return render(request, 'internships/profile.html', {
+        'form': form,
+        'profile': profile,
+        'skills': skills,
+    })

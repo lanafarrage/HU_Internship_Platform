@@ -8,6 +8,7 @@ class InternshipForm(forms.ModelForm):
         model = Internship
         fields = (
             "title",
+            "category",
             "description",
             "required_skills",
             "deadline",
@@ -17,10 +18,7 @@ class InternshipForm(forms.ModelForm):
         widgets = {
             "description": forms.Textarea(attrs={"rows": 5}),
             "required_skills": forms.Textarea(
-                attrs={
-                    "rows": 3,
-                    "placeholder": "List the skills required for this internship",
-                }
+                attrs={"rows": 3, "placeholder": "Comma-separated, e.g. Python, Django, SQL"}
             ),
             "deadline": forms.DateInput(attrs={"type": "date"}),
         }

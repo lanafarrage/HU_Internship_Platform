@@ -11,6 +11,7 @@ STOPWORDS = {
     'join', 'role', 'position', 'must', 'should', 'of', 'to', 'in', 'on', 'or',
     'as', 'at', 'by', 'is', 'it', 'be', 'we', 'an',
 }
+MIN_TEXT_SIM = 0.05
 
 
 def tokenize(text):
@@ -23,28 +24,42 @@ def tokenize(text):
     return tokens
 
 
+def parse_skills(text):
+    """'Python, SQL; Docker' -> ['Python', 'SQL', 'Docker']"""
+    skills, seen = [], set()
+    for part in re.split(r'[,;\n•|]+', text or ''):
+        skill = ' '.join(part.split()).strip(' -*').rstrip('.')
+        if skill and skill.lower() not in seen:
+            seen.add(skill.lower())
+            skills.append(skill)
+    return skills
+
+
+def has_skill(student_skill, requirement):
+    """Whole-word match, so 'Java' does not match 'JavaScript'."""
+    pattern = r'(?<![a-z0-9+#])' + re.escape(student_skill.lower().strip()) + r'(?![a-z0-9+#])'
+    return re.search(pattern, requirement.lower()) is not None
+
+
+def skill_match(student_skills, required):
+    matched, missing = [], []
+    for req in required:
+        if any(has_skill(s, req) for s in student_skills):
+            matched.append(req)
+        else:
+            missing.append(req)
+    return matched, missing
+
+
 def profile_text(profile):
-    parts = []
-    # Pull text from Lana's actual StudentProfile text fields
-    for field in ['full_name', 'about_me', 'experience', 'education', 'nationality', 'language']:
-        value = getattr(profile, field, None)
-        if value:
-            parts.append(str(value))
-    
-    # Pull skill names from Lana's related StudentSkill model relationship
-    skills = [ss.skill.name for ss in profile.student_skills.all()]
-    if skills:
-        parts.append(' '.join(skills))
-        
-    return ' '.join(parts)
+    return ' '.join(filter(None, [profile.about_me, profile.experience, profile.education]))
 
 
 def listing_tokens(listing):
-    # Title, category and requirements count more than the description.
     return (
         tokenize(listing.title) * 3
-        + tokenize(listing.category) * 2
-        + tokenize(listing.requirements) * 2
+        + tokenize(getattr(listing, 'category', '')) * 2
+        + tokenize(listing.required_skills) * 3
         + tokenize(listing.description)
     )
 
@@ -68,42 +83,44 @@ def cosine(a, b):
     return num / den if den else 0.0
 
 
-def recommend(text, listings, limit=5, min_score=0.01):
-    """Return [{'listing', 'score' (0-100), 'matched' (keywords)}], best first."""
+def recommend(student_skills, text, listings, limit=6):
+    """
+    score = % of the internship's required skills the student has.
+    Profile text similarity (TF-IDF cosine) breaks ties, and is the fallback
+    for internships that list no skills.
+    """
     listings = list(listings)
-    user_tokens = tokenize(text)
-    if not user_tokens or not listings:
+    if not listings:
         return []
 
+    user_tokens = tokenize(text + ' ' + ' '.join(student_skills))
     docs = [listing_tokens(l) for l in listings]
     idf = build_idf(docs + [user_tokens])
     user_vec = vectorize(user_tokens, idf)
 
     results = []
     for listing, tokens in zip(listings, docs):
-        score = cosine(user_vec, vectorize(tokens, idf))
-        
-        # Check for actual keyword overlap to guarantee relevant matches get a boost
-        matched = sorted(set(user_tokens) & set(tokens))
-        
-        if score < min_score and not matched:
-            continue
-            
-        # Boost and normalize the score based on cosine similarity and shared keywords
-        if matched:
-            # Scale the raw cosine score, but guarantee a baseline minimum percentage (e.g. 45%+) if keywords match
-            boosted_score = max(score * 600, len(matched) * 15 + 30)
-            final_percentage = int(min(98, max(40, boosted_score)))
-        else:
-            final_percentage = int(score * 100)
-            if final_percentage < min_score:
+        required = parse_skills(listing.required_skills)
+        matched, missing = skill_match(student_skills, required)
+        text_sim = cosine(user_vec, vectorize(tokens, idf)) if user_tokens else 0.0
+
+        if required:
+            if not matched:
                 continue
+            score = round(100 * len(matched) / len(required))
+        else:
+            if text_sim < MIN_TEXT_SIM:
+                continue
+            score = round(text_sim * 100)
 
         results.append({
             'listing': listing,
-            'score': final_percentage,
-            'matched': matched[:6],
+            'score': score,
+            'matched': matched,
+            'missing': missing,
+            'required_count': len(required),
+            'text_sim': text_sim,
         })
 
-    results.sort(key=lambda r: r['score'], reverse=True)
+    results.sort(key=lambda r: (r['score'], r['text_sim']), reverse=True)
     return results[:limit]
