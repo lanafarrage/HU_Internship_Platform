@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete internship listing | HUIntern</title>
+    <link rel="stylesheet" href="{% static 'dashboards/css/company-view.css' %}">
+</head>
+<body>
+    <main class="dashboard-main">
+        <div class="dashboard-container form-container">
+            <section class="panel">
+                <h1>Delete internship listing?</h1>
+                <p>Are you sure you want to permanently delete “{{ internship.title }}”?</p>
+                <form method="post" class="form-actions">
+                    {% csrf_token %}
+                    <button class="danger-button small-button" type="submit">Delete listing</button>
+                    <a class="cancel-link" href="{% url 'dashboards:company' %}">Cancel</a>
+                </form>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
