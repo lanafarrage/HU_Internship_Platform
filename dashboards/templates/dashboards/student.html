@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard | HUIntern{% endblock %}
+
+{% block content %}
+  <h1>Welcome, {{ user.first_name|default:user.username }}!</h1>
+
+  <h2>Recommended for you</h2>
+  <p>Coming soon.</p>
+
+  <h2>My applications</h2>
+  <p>Coming soon.</p>
+{% endblock %}
