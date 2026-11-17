@@ -22,3 +22,5 @@ class Internship(models.Model):
 
     def __str__(self):
         return self.title
+
+    duration = models.CharField(max_length=80, blank=True)  # e.g. "3 months"

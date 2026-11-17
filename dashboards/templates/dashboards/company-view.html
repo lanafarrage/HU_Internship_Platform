@@ -61,7 +61,7 @@
         <div class="dashboard-container">
             {% if messages %}
                 {% for message in messages %}
-                    <p class="muted-text">{{ message }}</p>
+                    <p class="muted-text">{{ internship.location }}{% if internship.duration %} • {{ internship.duration }}{% endif %} • Deadline {{ internship.deadline|date:"M d, Y" }}</p>
                 {% endfor %}
             {% endif %}
 

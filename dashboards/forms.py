@@ -12,6 +12,7 @@ class InternshipForm(forms.ModelForm):
             "required_skills",
             "deadline",
             "location",
+            "duration",
         )
         widgets = {
             "description": forms.Textarea(attrs={"rows": 5}),
