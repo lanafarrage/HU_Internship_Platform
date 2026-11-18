@@ -1,0 +1,79 @@
+Creating test database for alias 'default'...
+..F..FEF....FF..EEEEE.....Destroying test database for alias 'default'...
+Found 40 test(s).
+System check identified no issues (0 silenced).
+Traceback (most recent call last):
+  File "C:\Users\user\HU_Internship_Platform\manage.py", line 22, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\user\HU_Internship_Platform\manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\core\management\__init__.py", line 443, in execute_from_command_line
+    utility.execute()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\core\management\__init__.py", line 437, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\core\management\commands\test.py", line 24, in run_from_argv
+    super().run_from_argv(argv)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\core\management\base.py", line 422, in run_from_argv
+    self.execute(*args, **cmd_options)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\core\management\base.py", line 466, in execute
+    output = self.handle(*args, **options)
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\core\management\commands\test.py", line 63, in handle
+    failures = test_runner.run_tests(test_labels)
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\test\runner.py", line 1133, in run_tests
+    result = self.run_suite(suite)
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\test\runner.py", line 1060, in run_suite
+    return runner.run(suite)
+           ~~~~~~~~~~^^^^^^^
+  File "C:\Python313\Lib\unittest\runner.py", line 240, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "C:\Python313\Lib\unittest\suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\test\testcases.py", line 314, in __call__
+    self._setup_and_call(result)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\test\testcases.py", line 369, in _setup_and_call
+    super().__call__(result)
+    ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Python313\Lib\unittest\case.py", line 707, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\case.py", line 651, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\case.py", line 606, in _callTestMethod
+    if method() is not None:
+       ~~~~~~^^
+  File "C:\Users\user\HU_Internship_Platform\internships\tests.py", line 80, in test_profile_created_on_first_visit
+    u = User.objects.create_user('newbie', 'n@students.haigazian.edu.lb', 'pass12345', role='student')
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\contrib\auth\models.py", line 180, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\contrib\auth\models.py", line 167, in _create_user
+    user = self._create_user_object(username, email, password, **extra_fields)
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\contrib\auth\models.py", line 160, in _create_user_object
+    user.password = make_password(password)
+                    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\contrib\auth\hashers.py", line 118, in make_password
+    return hasher.encode(password, salt)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\contrib\auth\hashers.py", line 333, in encode
+    hash = pbkdf2(password, salt, iterations, digest=self.digest)
+  File "C:\Users\user\HU_Internship_Platform\venv\Lib\site-packages\django\utils\crypto.py", line 92, in pbkdf2
+    return hashlib.pbkdf2_hmac(digest().name, password, salt, iterations, dklen)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\signals.py", line 36, in __call__
+    self.default_handler(signum, frame)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+KeyboardInterrupt
+^C

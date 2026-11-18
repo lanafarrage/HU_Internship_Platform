@@ -548,6 +548,112 @@ button {
     font-size: 18px;
 }
 
+/* Internship form page */
+
+.form-container {
+    max-width: 760px;
+}
+
+.internship-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-field label {
+    color: var(--text-dark);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Django renders plain inputs, so style them by tag */
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="number"],
+.form-field input[type="date"],
+.form-field input[type="url"],
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--panel-border);
+    border-radius: 12px;
+    background: var(--applicant-cream);
+    color: var(--text-main);
+    font: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.form-field textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(94, 168, 228, 0.25);
+}
+
+.form-field input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-blue);
+}
+
+.field-help {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.field-error {
+    margin: 0;
+    color: #b42318;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 6px;
+}
+
+.form-actions .primary-button {
+    padding: 10px 22px;
+    font-size: 14px;
+}
+
+.cancel-link {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.cancel-link:hover {
+    color: var(--deep-blue);
+    text-decoration: underline;
+}
+
+/* The form page header has no icon, so keep the back link on one line */
+.site-header .nav-link {
+    flex-direction: row;
+    font-size: 13px;
+    font-weight: 600;
+}
+
 /* Decorative curves */
 
 .decorative-background {
@@ -771,6 +877,12 @@ button {
         flex-wrap: wrap;
         justify-content: center;
         gap: 12px 18px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
     }
 }
 

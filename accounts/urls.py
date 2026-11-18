@@ -16,4 +16,5 @@ urlpatterns = [
     ), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("home/", views.home_view, name="home"),
+    path("home-redirect/", views.site_home, name="site_home"),
 ]

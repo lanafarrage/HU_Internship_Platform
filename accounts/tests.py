@@ -36,12 +36,12 @@ class RegistrationTests(TestCase):
     def test_student_needs_university_email(self):
         self.client.post(reverse("accounts:register_student"),
                          signup_data(email="sara@gmail.com"))
-        self.assertFalse(User.objects.filter(username="20230001").exists())
+        self.assertFalse(User.objects.filter(username="2510052").exists())
 
     def test_role_cannot_be_forged(self):
         self.client.post(reverse("accounts:register_student"),
                          signup_data(role="coordinator"))
-        self.assertEqual(User.objects.get(username="20230001").role, "student")
+        self.assertEqual(User.objects.get(username="2510052").role, "student")
 
     def test_company_can_register(self):
         r = self.client.post(reverse("accounts:register_company"), signup_data(

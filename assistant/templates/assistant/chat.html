@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Assistant | HUIntern{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'assistant/css/chat.css' %}">{% endblock %}
+
+{% block content %}
+<div class="chat" data-ask-url="{% url 'assistant:ask' %}" data-clear-url="{% url 'assistant:clear' %}">
+  <div class="chat-header">
+    <h1>HUIntern Assistant</h1>
+    <button type="button" id="clear-chat" class="chat-clear">Clear chat</button>
+  </div>
+
+  <div class="chat-log" id="chat-log" aria-live="polite">
+    {% for m in history %}
+      <div class="msg msg-{{ m.role }}">{{ m.content }}</div>
+    {% empty %}
+      <div class="msg msg-assistant">
+        Hi {{ user.first_name|default:user.username }}! Ask me about internships, applications, or our policies.
+      </div>
+    {% endfor %}
+  </div>
+
+  <p class="chat-error" id="chat-error" hidden></p>
+
+  <form id="chat-form" class="chat-form">
+    {% csrf_token %}
+    <textarea id="chat-input" rows="1" maxlength="{{ max_length }}"
+              placeholder="Type your question..." required></textarea>
+    <button type="submit" id="chat-send">Send</button>
+  </form>
+</div>
+
+<script src="{% static 'assistant/js/chat.js' %}"></script>
+{% endblock %}

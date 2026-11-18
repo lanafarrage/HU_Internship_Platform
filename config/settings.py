@@ -15,6 +15,10 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
@@ -40,10 +44,12 @@ INSTALLED_APPS = [
     "rest_framework",
     "profiles",
     "documents",
+    "internships",
     "accounts",
     "dashboards",
-    
+    "assistant",
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -124,6 +130,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
@@ -139,3 +149,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 UNIVERSITY_EMAIL_DOMAIN = "students.haigazian.edu.lb"
 AUTH_USER_MODEL = 'accounts.User'
+
+# ---- AI assistant ----
+AI_API_KEY = os.environ.get("GROQ_API_KEY", "")
+AI_BASE_URL = "https://api.groq.com/openai/v1"
+AI_MODEL = os.environ.get("AI_MODEL", "openai/gpt-oss-120b")
+AI_TIMEOUT = 20                    # seconds to wait for the AI
+AI_MAX_TOKENS = 1500                # max length of an answer
+AI_MAX_QUESTION_LENGTH = 500       # characters a user may send
+AI_HISTORY_LIMIT = 10              # messages remembered per user
+AI_RATE_LIMIT_PER_MINUTE = 10      # questions per user per minute

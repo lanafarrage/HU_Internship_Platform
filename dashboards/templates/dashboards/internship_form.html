@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} | HUIntern</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'dashboards/css/internship-form.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-copy">
+                    <h1>{{ page_title }}</h1>
+                    <p>{{ user.company_name|default:"Company representative" }}</p>
+                </div>
+            </div>
+            <a class="nav-link" href="{% url 'dashboards:company' %}">Back to dashboard</a>
+        </div>
+    </header>
+    <main class="dashboard-main">
+        <div class="dashboard-container form-container">
+            <section class="panel">
+                <h2>{{ page_title }}</h2>
+                <div class="section-rule rule-wide"></div>
+                <form method="post" class="internship-form">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}<p class="field-help">{{ field.help_text }}</p>{% endif %}
+                            {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                        </div>
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                    <div class="form-actions">
+                        <button class="primary-button small-button" type="submit">Save listing</button>
+                        <a class="cancel-link" href="{% url 'dashboards:company' %}">Cancel</a>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>Haigazian University Internship Platform</div>
+        </div>
+    </footer>
+</body>
+</html>

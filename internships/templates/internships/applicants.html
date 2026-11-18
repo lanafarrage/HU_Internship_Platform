@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} | HUIntern</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'dashboards/css/company-view.css' %}">
+    <link rel="stylesheet" href="{% static 'internships/css/applicants.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-copy">
+                    <h1>{{ page_title }}</h1>
+                    <p>{{ user.company_name|default:"Company representative" }}</p>
+                </div>
+            </div>
+            <a class="nav-link" href="{% url 'dashboards:company' %}">Back to dashboard</a>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+
+            {% for message in messages %}
+                <p class="ap-message">{{ message }}</p>
+            {% endfor %}
+
+            <section class="panel">
+                <h2>Applicants ({{ total }})</h2>
+                <div class="section-rule rule-wide"></div>
+
+                {% if required %}
+                    <p class="ap-required">Required skills: {{ required|join:", " }}</p>
+                {% else %}
+                    <p class="ap-required">This internship lists no required skills, so match scores can't be calculated.</p>
+                {% endif %}
+
+                <div class="ap-filters">
+                    <a href="?" class="ap-filter {% if not status %}is-active{% endif %}">All ({{ total }})</a>
+                    {% for f in filters %}
+                        <a href="?status={{ f.name }}" class="ap-filter {% if status == f.name %}is-active{% endif %}">
+                            {{ f.name }} ({{ f.count }})
+                        </a>
+                    {% endfor %}
+                </div>
+
+                {% for row in rows %}
+                <article class="ap-card">
+                    <div class="ap-top">
+                        <span class="ap-rank">#{{ forloop.counter }}</span>
+                        <h3>{{ row.name }}</h3>
+                        <span class="ap-status ap-status-{{ row.application.status }}">{{ row.application.status }}</span>
+                    </div>
+
+                    {% if row.score is not None %}
+                        <div class="ap-score">
+                            <div class="ap-bar">
+                                <progress class="ap-fill" value="{{ row.score }}" max="100" aria-label="{{ row.score }}% match"></progress>
+                            </div>
+                            <strong>{{ row.score }}% match</strong>
+                        </div>
+                        <p class="ap-skills ap-has">
+                            ✓ Has: {% if row.matched %}{{ row.matched|join:", " }}{% else %}none of the required skills{% endif %}
+                        </p>
+                        {% if row.missing %}
+                            <p class="ap-skills ap-lacks">✗ Missing: {{ row.missing|join:", " }}</p>
+                        {% endif %}
+                    {% else %}
+                        <p class="ap-skills">No match score available.</p>
+                    {% endif %}
+
+                    <p class="ap-meta">Applied {{ row.application.applied_at|date:"M j, Y" }}</p>
+
+                    {% if row.application.cover_letter %}
+                        <details class="ap-letter">
+                            <summary>Cover letter</summary>
+                            <p>{{ row.application.cover_letter|linebreaksbr }}</p>
+                        </details>
+                    {% endif %}
+
+                    <div class="ap-actions">
+                        <form method="post" action="{% url 'update_application_status' row.application.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="Accepted">
+                            <button type="submit" class="ap-btn ap-accept">Accept</button>
+                        </form>
+                        <form method="post" action="{% url 'update_application_status' row.application.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="Rejected">
+                            <button type="submit" class="ap-btn ap-reject">Reject</button>
+                        </form>
+                        {% if row.application.status != "Pending" %}
+                        <form method="post" action="{% url 'update_application_status' row.application.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="Pending">
+                            <button type="submit" class="ap-btn ap-undo">Undo</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </article>
+                {% empty %}
+                    <p class="ap-empty">
+                        {% if status %}No {{ status|lower }} applications.{% else %}No one has applied yet.{% endif %}
+                    </p>
+                {% endfor %}
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>Haigazian University Internship Platform</div>
+        </div>
+    </footer>
+</body>
+</html>

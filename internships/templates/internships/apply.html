@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for {{ listing.title }}</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; }
+        .container { max-width: 700px; margin: 50px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { color: #0f172a; margin-top: 0; }
+        p { color: #475569; line-height: 1.5; }
+        textarea { width: 100%; height: 150px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-top: 10px; font-family: inherit; font-size: 14px; outline: none; }
+        textarea:focus { border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15); }
+        .btn-submit { background: #0284c7; color: white; border: none; padding: 12px 20px; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; margin-top: 15px; }
+        .btn-submit:hover { background: #0369a1; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0284c7; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="{% url 'browse_internships' %}" class="back-link">&larr; Back to Browse</a>
+        <h2>Apply for: {{ listing.title }}</h2>
+        <p><strong>Location:</strong> {{ listing.location }} | <strong>Category:</strong> {{ listing.category }}</p>
+        <p>{{ listing.description }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="cover_letter"><strong>Cover Letter / Notes:</strong></label>
+            <textarea name="cover_letter" placeholder="Write a short cover letter or why you are a great fit..."></textarea>
+            <br>
+            <button type="submit" class="btn-submit">Submit Application</button>
+        </form>
+    </div>
+
+</body>
+</html>

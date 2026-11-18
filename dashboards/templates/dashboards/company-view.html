@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechCorp Representative Dashboard | HUIntern</title>
+    <title>{{ user.company_name|default:"Company" }} Representative Dashboard | HUIntern</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{% static 'css/company_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboards/css/company-view.css' %}">
 </head>
 <body>
     <header class="site-header">
@@ -21,17 +21,17 @@
                     <span class="material-symbols-outlined">domain</span>
                 </div>
                 <div class="brand-copy">
-                    <h1>TechCorp Representative</h1>
+                    <h1>{{ user.company_name|default:"Company" }} Representative</h1>
                     <p>Company Management Portal</p>
                 </div>
             </div>
 
             <nav class="portal-nav" aria-label="Portal Navigation">
-                <a href="#" class="nav-link">
+                <a href="{% url 'dashboards:company' %}" class="nav-link">
                     <span class="material-symbols-outlined">dashboard</span>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{% url 'dashboards:company' %}" class="nav-link">
                     <span class="material-symbols-outlined">work</span>
                     <span>Internships</span>
                 </a>
@@ -39,102 +39,82 @@
                     <span class="material-symbols-outlined">group</span>
                     <span>Applicants</span>
                 </a>
-                <a href="#" class="nav-link messages-link">
+                <a href="{% url 'assistant:chat' %}" class="nav-link messages-link"> 
                     <span class="nav-icon-wrap">
                         <span class="material-symbols-outlined">chat_bubble</span>
                         <span class="notification-dot"></span>
                     </span>
                     <span>Messages</span>
                 </a>
-                <a href="#" class="nav-link">
-                    <span class="material-symbols-outlined">logout</span>
-                    <span>Logout</span>
-                </a>
+                <form method="post" action="{% url 'accounts:logout' %}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link" style="background:none;border:none;cursor:pointer;font:inherit">
+                        <span class="material-symbols-outlined">logout</span>
+                        <span>Logout</span>
+                    </button>
+                </form>
             </nav>
         </div>
     </header>
 
     <main class="dashboard-main">
         <div class="dashboard-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="muted-text">{{ internship.location }}{% if internship.duration %} • {{ internship.duration }}{% endif %} • Deadline {{ internship.deadline|date:"M d, Y" }}</p>
+                {% endfor %}
+            {% endif %}
+
             <div class="dashboard-grid">
                 <div class="main-column">
                     <section class="panel internships-panel">
                         <div class="panel-heading">
                             <h2>Posted Internships</h2>
-                            <button class="primary-button add-button" type="button">+ Add Internship</button>
+                            <a class="primary-button add-button" href="{% url 'dashboards:internship_create' %}">+ Add Internship</a>
                         </div>
+                        <p class="muted-text">{{ open_count }} open • {{ closed_count }} closed</p>
                         <div class="section-rule rule-wide"></div>
 
                         <div class="internship-list">
-                            <article class="internship-item">
+                            {% for internship in internships %}
+                            <article class="internship-item{% if forloop.last %} internship-item-last{% endif %}">
                                 <div class="internship-info">
                                     <div class="internship-title-row">
-                                        <h3>Frontend Web Developer</h3>
-                                        <span class="status-pill">Active</span>
+                                        <h3>{{ internship.title }}</h3>
+                                        <span class="status-pill">{% if internship.is_open %}Active{% else %}Closed{% endif %}</span>
                                     </div>
-                                    <p class="muted-text">Haigazian CS Dept • Summer 2026</p>
-                                    <div class="applicant-count-wrap">
-                                        <span class="applicant-count">16 Applicants</span>
-                                    </div>
+                                    <p class="muted-text">{{ internship.location }} • Deadline {{ internship.deadline|date:"M d, Y" }}</p>
                                 </div>
                                 <div class="internship-actions">
-                                    <button class="primary-button small-button" type="button">View Applicants</button>
-                                    <button class="icon-button" type="button" aria-label="Edit Listing">
+                                    <a class="icon-button" href="{% url 'dashboards:internship_edit' internship.pk %}" aria-label="Edit Listing">
                                         <span class="material-symbols-outlined">edit</span>
-                                    </button>
+                                    </a>
+                                    {% if internship.is_open %}
+                                    <form method="post" action="{% url 'dashboards:internship_close' internship.pk %}" style="display:inline">
+                                        {% csrf_token %}
+                                        <button class="icon-button" type="submit" aria-label="Close Listing">
+                                            <span class="material-symbols-outlined">lock</span>
+                                        </button>
+                                    </form>
+                                    {% endif %}
+                                    <a class="icon-button" href="{% url 'dashboards:internship_delete' internship.pk %}" aria-label="Delete Listing">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
                                 </div>
                             </article>
-
-                            <article class="internship-item">
-                                <div class="internship-info">
-                                    <div class="internship-title-row">
-                                        <h3>UI/UX Product Designer</h3>
-                                        <span class="status-pill">Active</span>
-                                    </div>
-                                    <p class="muted-text">Graphic Design &amp; CS Dept • Fall 2026</p>
-                                    <div class="applicant-count-wrap">
-                                        <span class="applicant-count">14 Applicants</span>
-                                    </div>
-                                </div>
-                                <div class="internship-actions">
-                                    <button class="primary-button small-button" type="button">View Applicants</button>
-                                    <button class="icon-button" type="button" aria-label="Edit Listing">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                </div>
-                            </article>
-
-                            <article class="internship-item internship-item-last">
-                                <div class="internship-info">
-                                    <div class="internship-title-row">
-                                        <h3>AI &amp; Data Science Intern</h3>
-                                        <span class="status-pill">Active</span>
-                                    </div>
-                                    <p class="muted-text">Faculty of Sciences • Research Track</p>
-                                    <div class="applicant-count-wrap">
-                                        <span class="applicant-count">8 Applicants</span>
-                                    </div>
-                                </div>
-                                <div class="internship-actions">
-                                    <button class="primary-button small-button" type="button">View Applicants</button>
-                                    <button class="icon-button" type="button" aria-label="Edit Listing">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                </div>
-                            </article>
+                            {% empty %}
+                            <p class="muted-text">No internships yet. Click "Add Internship" to create one.</p>
+                            {% endfor %}
                         </div>
                     </section>
 
                     <section class="panel company-overview-panel">
                         <div class="panel-heading">
                             <h2>Company Profile &amp; Overview</h2>
-                            <button class="icon-button" type="button" aria-label="Edit Profile">
-                                <span class="material-symbols-outlined">edit</span>
-                            </button>
                         </div>
                         <div class="section-rule rule-medium"></div>
                         <p class="overview-text">
-                            TechCorp Solutions is an industry-leading software consultancy partnering with Haigazian University to offer accredited internships in web development, system architecture, and UI/UX design.
+                            {{ user.company_name|default:"Your company" }} partners with Haigazian University to offer accredited internships.
                         </p>
                     </section>
                 </div>
@@ -143,9 +123,6 @@
                     <section class="panel company-details-panel">
                         <div class="panel-heading">
                             <h2>Company Details</h2>
-                            <button class="icon-button" type="button" aria-label="Edit Details">
-                                <span class="material-symbols-outlined">edit</span>
-                            </button>
                         </div>
 
                         <div class="details-list">
@@ -153,79 +130,16 @@
                                 <span class="material-symbols-outlined detail-icon">apartment</span>
                                 <div>
                                     <p class="detail-label">Company</p>
-                                    <p class="detail-value">TechCorp Solutions S.A.L.</p>
-                                </div>
-                            </div>
-                            <div class="detail-row">
-                                <span class="material-symbols-outlined detail-icon">category</span>
-                                <div>
-                                    <p class="detail-label">Industry</p>
-                                    <p class="detail-value">Software Engineering &amp; AI</p>
+                                    <p class="detail-value">{{ user.company_name|default:"Not set" }}</p>
                                 </div>
                             </div>
                             <div class="detail-row">
                                 <span class="material-symbols-outlined detail-icon">mail</span>
                                 <div>
                                     <p class="detail-label">Email</p>
-                                    <p class="detail-value">recruitment@techcorp.io</p>
+                                    <p class="detail-value">{{ user.email }}</p>
                                 </div>
                             </div>
-                            <div class="detail-row">
-                                <span class="material-symbols-outlined detail-icon">call</span>
-                                <div>
-                                    <p class="detail-label">Phone</p>
-                                    <p class="detail-value">+961 1 349 200</p>
-                                </div>
-                            </div>
-                            <div class="detail-row">
-                                <span class="material-symbols-outlined detail-icon">location_on</span>
-                                <div>
-                                    <p class="detail-label">Location</p>
-                                    <p class="detail-value">Beirut Central District, Lebanon</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="panel recent-applicants-panel">
-                        <div class="panel-heading applicants-heading">
-                            <h2>Recent Applicants</h2>
-                            <a class="view-all-link" href="#">View All</a>
-                        </div>
-
-                        <div class="recent-applicants-list">
-                            <article class="applicant-card">
-                                <div class="applicant-identity">
-                                    <div class="avatar avatar-blue">LF</div>
-                                    <div>
-                                        <p class="applicant-name">Lana Bou Farrage</p>
-                                        <p class="applicant-role">Frontend Developer</p>
-                                    </div>
-                                </div>
-                                <button class="review-button" type="button">Review CV</button>
-                            </article>
-
-                            <article class="applicant-card">
-                                <div class="applicant-identity">
-                                    <div class="avatar avatar-indigo">MK</div>
-                                    <div>
-                                        <p class="applicant-name">Mark Khoury</p>
-                                        <p class="applicant-role">AI / Data Science</p>
-                                    </div>
-                                </div>
-                                <button class="review-button" type="button">Review CV</button>
-                            </article>
-
-                            <article class="applicant-card">
-                                <div class="applicant-identity">
-                                    <div class="avatar avatar-green">NT</div>
-                                    <div>
-                                        <p class="applicant-name">Nour Tabbara</p>
-                                        <p class="applicant-role">UI/UX Design</p>
-                                    </div>
-                                </div>
-                                <button class="review-button" type="button">Review CV</button>
-                            </article>
                         </div>
                     </section>
 

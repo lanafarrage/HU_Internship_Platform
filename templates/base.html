@@ -1,15 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <title>{% block title %}HUIntern{% endblock %}</title>
-  {% load static %}
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   {% block extra_css %}{% endblock %}
 </head>
 <body>
   <nav>
-    <a href="/">HUIntern</a>
+    <a href="{% url 'accounts:site_home' %}">HUIntern</a>
     {% if user.is_authenticated %}
       <span>{{ user.username }} ({{ user.get_role_display }})</span>
       <form method="post" action="{% url 'accounts:logout' %}" style="display:inline">

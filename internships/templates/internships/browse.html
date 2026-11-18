@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Internships | HUIntern</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'internships/css/browse.css' %}">
+</head>
+<body>
+
+    <div class="header">
+        <a href="{% url 'dashboards:student' %}" class="back-btn">&larr; Back</a>
+        <h1>Find the right internship for you!</h1>
+        <a href="{% url 'recommended_internships' %}" class="rec-btn">✨ Recommended for you</a>
+    </div>
+
+    <form method="get" class="filter-container">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search internships, title, or skills..." class="search-box">
+
+        <select name="category" onchange="this.form.submit()">
+            <option value="All" {% if selected_category == 'All' or not selected_category %}selected{% endif %}>Category: All</option>
+            <option value="Software Engineering" {% if selected_category == 'Software Engineering' %}selected{% endif %}>Software Engineering</option>
+            <option value="Data Science" {% if selected_category == 'Data Science' %}selected{% endif %}>Data Science</option>
+            <option value="Cybersecurity" {% if selected_category == 'Cybersecurity' %}selected{% endif %}>Cybersecurity</option>
+            <option value="IT & Support" {% if selected_category == 'IT & Support' %}selected{% endif %}>IT & Support</option>
+        </select>
+
+        <select name="location" onchange="this.form.submit()">
+            <option value="All" {% if selected_location == 'All' or not selected_location %}selected{% endif %}>Location: All</option>
+            <option value="Beirut" {% if selected_location == 'Beirut' %}selected{% endif %}>Beirut</option>
+            <option value="Tripoli" {% if selected_location == 'Tripoli' %}selected{% endif %}>Tripoli</option>
+            <option value="Byblos" {% if selected_location == 'Byblos' %}selected{% endif %}>Byblos</option>
+            <option value="Sidon" {% if selected_location == 'Sidon' %}selected{% endif %}>Sidon</option>
+            <option value="Remote" {% if selected_location == 'Remote' %}selected{% endif %}>Remote</option>
+        </select>
+
+        <select name="sort" onchange="this.form.submit()">
+            <option value="date" {% if sort_by == 'date' %}selected{% endif %}>Sort By: Date</option>
+            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Sort By: Name</option>
+        </select>
+
+        <button type="submit" class="btn-search">Search</button>
+    </form>
+
+    <div class="content">
+       {% for listing in listings %}
+    <div class="card">
+        <h3>{{ listing.title }}</h3>
+        <div class="meta-info">
+            {% if listing.category == 'Software Engineering' %}
+                <span class="badge badge-software">Software Engineering</span>
+            {% elif listing.category == 'Data Science' %}
+                <span class="badge badge-data">Data Science</span>
+            {% elif listing.category == 'Cybersecurity' %}
+                <span class="badge badge-cyber">Cybersecurity</span>
+            {% else %}
+                <span class="badge badge-it">{{ listing.category }}</span>
+            {% endif %}
+            <span class="badge badge-location">📍 {{ listing.location }}</span>
+            <span class="badge badge-location">🏢 {{ listing.company.company_name|default:listing.company.username }}</span>
+            {% if listing.duration %}<span class="badge badge-location">⏱ {{ listing.duration }}</span>{% endif %}
+            <span style="font-size: 14px; color: #64748b;">Deadline: {{ listing.deadline }}</span>
+        </div>
+        <p class="description">{{ listing.description }}</p>
+        <div class="requirements">
+            <strong>Required skills:</strong> {{ listing.required_skills }}
+        </div>
+        <div class="apply-wrap">
+            {% if listing.pk in applied_ids %}
+                <span class="btn-apply" style="background: #94a3b8;">Applied ✓</span>
+            {% else %}
+                <a href="{% url 'apply_internship' listing.pk %}" class="btn-apply">Apply Now</a>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <p style="text-align: center; color: #64748b; font-size: 16px; padding: 40px 0;">No internships found matching your criteria.</p>
+{% endfor %}
+    </div>
+
+</body>
+</html>

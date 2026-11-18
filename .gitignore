@@ -6,3 +6,5 @@ media/
 .env
 .vscode/
 db.sqlite3cd
+
+db.sqlite3
