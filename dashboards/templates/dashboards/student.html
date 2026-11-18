@@ -1,12 +1,214 @@
-{% extends "base.html" %}
-{% block title %}My Dashboard | HUIntern{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard | HUIntern</title>
 
-{% block content %}
-  <h1>Welcome, {{ user.first_name|default:user.username }}!</h1>
-  <p>
-    <a href="{% url 'student_profile' %}">My profile</a> . 
-    <a href="{% url 'browse_internships' %}">Show me all internships</a> ·
-    <a href="{% url 'recommended_internships' %}">Recommended for you</a> ·
-    <a href="{% url 'my_applications' %}">My applications</a>
-  </p>
-{% endblock %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'dashboards/css/student.css' %}">
+</head>
+
+<body class="st-body">
+
+  <!-- ===== Top bar ===== -->
+  <header class="st-header">
+    <div class="st-header-inner">
+
+      <div class="st-brand">
+        <div class="st-logo">
+          <span class="material-symbols-outlined st-logo-icon">school</span>
+        </div>
+        <div>
+          <h1 class="st-brand-title">HUIntern</h1>
+          <p class="st-brand-sub">Student Portal</p>
+        </div>
+      </div>
+
+      <nav class="st-nav" aria-label="Portal navigation">
+        <a class="st-nav-item" href="{% url 'dashboards:student' %}">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+        <a class="st-nav-item" href="{% url 'browse_internships' %}">
+          <span class="material-symbols-outlined">work</span>
+          <span>Internships</span>
+        </a>
+        <a class="st-nav-item" href="{% url 'my_applications' %}">
+          <span class="material-symbols-outlined">description</span>
+          <span>Applications</span>
+        </a>
+        <a class="st-nav-item" href="{% url 'assistant:chat' %}">
+          <span class="material-symbols-outlined">chat_bubble</span>
+          <span>Assistant</span>
+        </a>
+
+        <!-- Logout must be a POST form -->
+        <form method="post" action="{% url 'accounts:logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="st-nav-item">
+            <span class="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+          </button>
+        </form>
+      </nav>
+    </div>
+  </header>
+
+  <main class="st-main">
+
+    <!-- ===== Django messages ("Successfully logged in!") ===== -->
+    {% if messages %}
+    <div class="st-container st-messages">
+      {% for message in messages %}
+      <div class="st-message">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ===== Welcome bar ===== -->
+    <div class="st-container st-welcome-wrap">
+      <div class="st-welcome">
+        <div class="st-avatar">{{ user.first_name|default:user.username|slice:":1" }}</div>
+        <div class="st-welcome-text">
+          <h2>Welcome back, {{ user.first_name|default:user.username }}!</h2>
+          <p>Haigazian University · Internship placement</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="st-container st-content">
+
+      <!-- ===== Search ===== -->
+      <form method="get" action="{% url 'browse_internships' %}" class="st-search">
+        <span class="material-symbols-outlined st-search-icon">search</span>
+        <input type="text" name="q" class="st-search-input"
+               placeholder="Search internships by title, skill or location...">
+        <button type="submit" class="st-search-btn">Search</button>
+      </form>
+
+      <!-- ===== Quick links ===== -->
+      <section>
+        <h3 class="st-section-title">What would you like to do?</h3>
+        <div class="st-accent-line"></div>
+
+        <div class="st-grid st-grid-4">
+
+          <a href="{% url 'student_profile' %}" class="st-card">
+            <div class="st-card-icon">
+              <span class="material-symbols-outlined st-c-primary">person</span>
+            </div>
+            <div>
+              <h4>My profile</h4>
+              <p>Update your details, skills and documents.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'browse_internships' %}" class="st-card">
+            <div class="st-card-icon">
+              <span class="material-symbols-outlined st-c-secondary">work</span>
+            </div>
+            <div>
+              <h4>Show me all internships</h4>
+              <p>Browse, search and filter open positions.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'recommended_internships' %}" class="st-card">
+            <div class="st-card-icon st-card-icon-pink">
+              <span class="material-symbols-outlined st-c-pink">auto_awesome</span>
+            </div>
+            <div>
+              <h4>Recommended for you</h4>
+              <p>Internships that match your skills best.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'my_applications' %}" class="st-card">
+            <div class="st-card-icon">
+              <span class="material-symbols-outlined st-c-primary">description</span>
+            </div>
+            <div>
+              <h4>My applications</h4>
+              <p>Track the status of everything you applied to.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===== Recommended cards (only when the view passes `recommended`) ===== -->
+      {% if recommended %}
+      <section>
+        <div class="st-section-head">
+          <div>
+            <h3 class="st-section-title">Recommended for You</h3>
+            <div class="st-accent-line"></div>
+          </div>
+          <a href="{% url 'recommended_internships' %}" class="st-link">
+            See all <span class="material-symbols-outlined st-ico-18">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="st-grid st-grid-4">
+          {% for item in recommended %}
+          <a href="{% url 'recommended_internships' %}" class="st-card st-card-job">
+            <div class="st-job-top">
+              <div class="st-card-icon st-card-icon-sm">
+                <span class="material-symbols-outlined st-c-primary">work</span>
+              </div>
+              {% if item.score is not None %}
+              <span class="st-badge">{{ item.score }}% Match</span>
+              {% endif %}
+            </div>
+            <h4 class="st-clamp">{{ item.internship.title }}</h4>
+            <p class="st-company">
+              {{ item.internship.company.company_name|default:item.internship.company.username }}
+            </p>
+            <p class="st-location">
+              <span class="material-symbols-outlined st-ico-16">location_on</span>
+              {{ item.internship.location }}
+            </p>
+          </a>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- ===== Assistant callout ===== -->
+      <div class="st-callout">
+        <div class="st-callout-main">
+          <div class="st-callout-icon">
+            <span class="material-symbols-outlined">smart_toy</span>
+          </div>
+          <div>
+            <h5>Have a question about internships or policies?</h5>
+            <p>Ask the HUIntern assistant: it can help with applications, documents and deadlines.</p>
+          </div>
+        </div>
+        <a href="{% url 'assistant:chat' %}" class="st-callout-btn">Ask the assistant</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Decorative waves ===== -->
+  <div class="st-waves" aria-hidden="true">
+    <svg fill="none" viewBox="0 0 700 550" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-100,500 C150,550 180,300 350,420 C500,520 20,250 -50,150" stroke="#6BBAEC" stroke-opacity="0.6" stroke-width="1.2"></path>
+      <path d="M-120,440 C120,490 220,280 400,380 C540,460 60,200 -70,80" stroke="#FF729F" stroke-opacity="0.5" stroke-width="1.2"></path>
+      <path d="M-150,380 C80,420 240,240 450,350 C580,420 100,160 -90,20" stroke="#6987C9" stroke-opacity="0.6" stroke-width="1.2"></path>
+    </svg>
+  </div>
+
+  <footer class="st-footer">
+    <div class="st-container">
+      © {% now "Y" %} Haigazian University. HUIntern Industry Partnership Network.
+    </div>
+  </footer>
+
+</body>
+</html>

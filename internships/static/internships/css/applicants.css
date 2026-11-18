@@ -1,0 +1,82 @@
+/* Applicants page: extras on top of company-view.css */
+
+.ap-message {
+    margin: 0 0 14px;
+    padding: 10px 16px;
+    background: #dcfce7;
+    color: #166534;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.ap-required { margin: 14px 0; color: #64748b; }
+
+/* Status filter pills */
+.ap-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+
+.ap-filter {
+    padding: 6px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    background: #fff;
+    color: #334155;
+    font-size: 14px;
+    text-decoration: none;
+}
+.ap-filter.is-active { background: #3b5b99; border-color: #3b5b99; color: #fff; }
+
+/* Applicant card */
+.ap-card {
+    margin-bottom: 18px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.ap-top { display: flex; align-items: center; gap: 12px; }
+.ap-top h3 { flex: 1; margin: 0; font-size: 18px; }
+.ap-rank { color: #94a3b8; font-weight: 700; }
+
+.ap-status {
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: #fef9c3;
+    color: #854d0e;
+    font-size: 13px;
+    font-weight: 700;
+}
+.ap-status-Accepted { background: #dcfce7; color: #166534; }
+.ap-status-Rejected { background: #fee2e2; color: #991b1b; }
+
+/* Match score bar */
+.ap-score { display: flex; align-items: center; gap: 12px; margin: 14px 0 8px; }
+.ap-bar { flex: 1; height: 8px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+.ap-fill { height: 100%; background: linear-gradient(90deg, #6bbaec, #3b5b99); }
+
+.ap-skills { margin: 4px 0; font-size: 14px; }
+.ap-has { color: #166534; }
+.ap-lacks { color: #991b1b; }
+.ap-meta { margin: 10px 0; color: #64748b; font-size: 14px; }
+
+.ap-letter summary { cursor: pointer; color: #3b5b99; font-weight: 600; }
+.ap-letter p { margin: 8px 0 0; }
+
+/* Accept / Reject / Undo */
+.ap-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.ap-actions form { margin: 0; }
+
+.ap-btn {
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+.ap-accept { background: #dcfce7; color: #166534; }
+.ap-reject { background: #fee2e2; color: #991b1b; }
+.ap-undo   { background: #e2e8f0; color: #334155; }
+.ap-btn:hover { filter: brightness(0.96); }
+
+.ap-empty { padding: 30px 0; text-align: center; color: #64748b; }

@@ -2,13 +2,14 @@ from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.views.decorators.http import require_POST
+from .recommender import parse_skills, profile_text, recommend, skill_match
 
 from accounts.permissions import role_required
 from dashboards.models import Internship
 from profiles.models import Skill, StudentProfile, StudentSkill
 from .forms import StudentProfileForm
 from .models import InternshipApplication
-from .recommender import parse_skills, profile_text, recommend
 
 
 def get_student_profile(request):
@@ -159,3 +160,70 @@ def student_profile(request):
         'profile': profile,
         'skills': skills,
     })
+
+STATUS_FILTERS = ("Pending", "Accepted", "Rejected")
+
+
+@role_required("company_rep")
+def listing_applicants(request, pk):
+    # company=request.user: a company can only open its own listings
+    listing = get_object_or_404(Internship, pk=pk, company=request.user)
+    required = parse_skills(listing.required_skills)
+
+    applications = (
+        InternshipApplication.objects.filter(listing=listing)
+        .select_related('student')
+        .prefetch_related('student__student_skills__skill')
+    )
+
+    rows = []
+    counts = {s: 0 for s in STATUS_FILTERS}
+    for application in applications:
+        skills = [ss.skill.name for ss in application.student.student_skills.all()]
+        matched, missing = skill_match(skills, required)
+        score = round(100 * len(matched) / len(required)) if required else None
+        counts[application.status] = counts.get(application.status, 0) + 1
+        rows.append({
+            'application': application,
+            'name': application.student.full_name,
+            'score': score,
+            'matched': matched,
+            'missing': missing,
+        })
+
+    # Highest score first; "no score" last; ties go to whoever applied first
+    rows.sort(key=lambda r: (
+        r['score'] is None,
+        -(r['score'] or 0),
+        r['application'].applied_at,
+    ))
+
+    status = request.GET.get('status', '')
+    if status in STATUS_FILTERS:
+        rows = [r for r in rows if r['application'].status == status]
+
+        filters = [{'name': s, 'count': counts[s]} for s in STATUS_FILTERS]
+
+    return render(request, 'internships/applicants.html', {
+        'page_title': f"Applicants: {listing.title}",
+        'listing': listing,
+        'rows': rows,
+        'required': required,
+        'status': status,
+        'filters': filters,
+        'total': sum(counts.values()),
+    })
+
+
+@role_required("company_rep")
+@require_POST
+def update_application_status(request, pk):
+    # listing__company=request.user: only the owning company can change a status
+    application = get_object_or_404(
+        InternshipApplication, pk=pk, listing__company=request.user)
+    new_status = request.POST.get('status')
+    if new_status in STATUS_FILTERS:
+        application.status = new_status
+        application.save(update_fields=['status'])
+        messages.success(request, f"Application marked as {new_status.lower()}.")
+    return redirect('listing_applicants', pk=application.listing_id)
